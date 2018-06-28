@@ -53,7 +53,7 @@ trait Downloader
             },
         ]);
 
-        $response = $client->get("https://builder.aerocommerce.com/get/{$this->version}");
+        $response = $client->get("https://builder.aerocommerce.com/get/{$this->version}.zip");
 
         $this->attemptToCacheDownloadedZip($zipContents = $response->getBody());
 
