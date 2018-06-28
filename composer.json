@@ -1,0 +1,28 @@
+{
+  "name": "aerocommerce/cli",
+  "description": "Aero Commerce CLI Tool",
+  "keywords": [
+    "aero"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Tim Spratt",
+      "email": "tim.spratt@techquity.co.uk"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Aero\\Cli\\": "src/"
+    }
+  },
+  "require": {
+    "ext-zip": "*",
+    "guzzlehttp/guzzle": "~6.0",
+    "symfony/console": "~4.0",
+    "symfony/process": "~4.0"
+  },
+  "bin": [
+    "aero"
+  ]
+}
