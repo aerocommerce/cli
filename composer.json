@@ -2,7 +2,8 @@
   "name": "aerocommerce/cli",
   "description": "Aero Commerce CLI Tool",
   "keywords": [
-    "aero"
+    "aero",
+    "ecommerce"
   ],
   "license": "MIT",
   "authors": [
