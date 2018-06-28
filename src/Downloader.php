@@ -3,7 +3,6 @@
 namespace Aero\Cli;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
 use Symfony\Component\Console\Helper\ProgressBar;
 
 trait Downloader
