@@ -71,9 +71,7 @@ class NewCommand extends Command
 
         $this->download($zipName = $this->makeFilename())
             ->extract($zipName)
-            ->cleanup($zipName)
-            ->applyPermissions()
-            ->createUser();
+            ->cleanup($zipName);
 
         $this->output->writeln("<info>[✔] Aero Commerce has been installed into the <comment>{$dir}</comment> directory.</info>");
     }
