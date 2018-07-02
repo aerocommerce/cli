@@ -76,8 +76,8 @@ class NewCommand extends Command
 
         $this->download($zipName = $this->makeFilename())
             ->extract($zipName)
-            ->prepareWritableDirectories($this->directory)
-            ->cleanup($zipName);
+            ->cleanup($zipName)
+            ->prepareWritableDirectories($this->directory);
 
         $output->writeln('Configuring dependencies...');
 
