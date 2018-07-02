@@ -79,8 +79,6 @@ class NewCommand extends Command
             ->cleanup($zipName)
             ->prepareWritableDirectories($this->directory);
 
-        $output->writeln('Configuring dependencies...');
-
         $composer = $this->findComposer();
 
         $commands = [
@@ -99,8 +97,6 @@ class NewCommand extends Command
         $process->run(function ($type, $line) use ($output) {
             $output->write($line);
         });
-
-        $this->output->writeln(' <info>[✔]</info>');
 
         $this->output->writeln('<info>[✔] Aero Commerce has been installed.</info>');
     }
