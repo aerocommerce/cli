@@ -9,6 +9,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Process\Process;
 
 class NewCommand extends Command
 {
@@ -44,7 +45,7 @@ class NewCommand extends Command
         $this->setName('new')
             ->setDescription('Create a new Aero Commerce application.')
             ->addArgument('name', InputArgument::REQUIRED)
-            ->addOption('force-download', null, InputOption::VALUE_NONE, 'Force Aero Commerce to be downloaded, even if a cached version exists.');
+            ->addOption('force', null, InputOption::VALUE_NONE, 'Force Aero Commerce to be downloaded, even if a cached version or the directory already exists.');
     }
 
     /**
@@ -63,17 +64,40 @@ class NewCommand extends Command
         $this->output = $output;
         $this->input = $input;
 
-        $dir = $this->input->getArgument('name');
+        $this->directory = getcwd().'/'.$input->getArgument('name');
 
-        $this->verifyApplicationDoesntExist($this->directory = getcwd().'/'.$dir);
+        if (! $input->getOption('force')) {
+            $this->verifyApplicationDoesntExist($this->directory);
+        }
 
         $this->version = $this->getVersion();
 
-        $this->download($zipName = $this->makeFilename())
-            ->extract($zipName)
-            ->cleanup($zipName);
+        $this->download($zipName = $this->makeFilename())->extract($zipName)->cleanup($zipName);
 
-        $this->output->writeln("<info>[✔] Aero Commerce has been installed into the <comment>{$dir}</comment> directory.</info>");
+        $output->writeln('Configuring dependencies...');
+
+        $composer = $this->findComposer();
+
+        $commands = [
+            $composer.' install --no-scripts',
+            $composer.' run-script post-root-package-install',
+            $composer.' run-script post-create-project-cmd',
+            $composer.' run-script post-autoload-dump',
+        ];
+
+        $process = new Process(implode(' && ', $commands), $this->directory, null, null, null);
+
+        if ('\\' !== DIRECTORY_SEPARATOR && file_exists('/dev/tty') && is_readable('/dev/tty')) {
+            $process->setTty(true);
+        }
+
+        $process->run(function ($type, $line) use ($output) {
+            $output->write($line);
+        });
+
+        $this->output->writeln(' <info>[✔]</info>');
+
+        $this->output->writeln("<info>[✔] Aero Commerce has been installed.</info>");
     }
 
     /**
@@ -99,6 +123,11 @@ class NewCommand extends Command
         return getcwd().'/aero_'.md5(time().uniqid());
     }
 
+    /**
+     * Get the version that should be downloaded.
+     *
+     * @return string
+     */
     protected function getVersion()
     {
         $this->output->write('Checking for the latest version...');
@@ -108,5 +137,19 @@ class NewCommand extends Command
         $this->output->writeln(" <info>[✔] $version</info>");
 
         return $version;
+    }
+
+    /**
+     * Get the composer command for the environment.
+     *
+     * @return string
+     */
+    protected function findComposer()
+    {
+        if (file_exists(getcwd().'/composer.phar')) {
+            return '"'.PHP_BINARY.'" composer.phar';
+        }
+
+        return 'composer';
     }
 }

@@ -28,7 +28,7 @@ trait Downloader
 
     protected function shouldUseCachedZip()
     {
-        if ($this->input->getOption('force-download')) {
+        if ($this->input->getOption('force')) {
             return false;
         }
 
