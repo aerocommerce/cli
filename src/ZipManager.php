@@ -39,7 +39,11 @@ trait ZipManager
     {
         $this->output->write('Cleaning up...');
 
-        rename($this->directory.'_tmp/aero', $this->directory);
+        foreach (scandir($this->directory.'_tmp', SCANDIR_SORT_DESCENDING) as $dir) {
+            @rename($this->directory.'_tmp/'.$dir, $this->directory);
+            break;
+        }
+
 
         @rmdir($this->directory.'_tmp');
 
