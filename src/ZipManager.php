@@ -44,7 +44,6 @@ trait ZipManager
             break;
         }
 
-
         @rmdir($this->directory.'_tmp');
 
         @chmod($zipFile, 0777);
