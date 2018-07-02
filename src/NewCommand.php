@@ -4,12 +4,14 @@ namespace Aero\Cli;
 
 use RuntimeException;
 use GuzzleHttp\Client;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Process;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
 class NewCommand extends Command
 {
@@ -72,7 +74,7 @@ class NewCommand extends Command
 
         $this->version = $this->getVersion();
 
-        $this->download($zipName = $this->makeFilename())->extract($zipName)->cleanup($zipName);
+        $this->download($zipName = $this->makeFilename())->extract($zipName)->prepareWritableDirectories($this->directory)->cleanup($zipName);
 
         $output->writeln('Configuring dependencies...');
 
@@ -121,6 +123,26 @@ class NewCommand extends Command
     protected function makeFilename()
     {
         return getcwd().'/aero_'.md5(time().uniqid());
+    }
+
+    /**
+     * Make sure the storage and bootstrap cache directories are writable.
+     *
+     * @param  string $appDirectory
+     * @return $this
+     */
+    protected function prepareWritableDirectories($appDirectory)
+    {
+        $filesystem = new Filesystem;
+
+        try {
+            $filesystem->chmod($appDirectory.DIRECTORY_SEPARATOR."bootstrap/cache", 0755, 0000, true);
+            $filesystem->chmod($appDirectory.DIRECTORY_SEPARATOR."storage", 0755, 0000, true);
+        } catch (IOExceptionInterface $e) {
+            $this->output->writeln('<comment>You should verify that the "storage" and "bootstrap/cache" directories are writable.</comment>');
+        }
+
+        return $this;
     }
 
     /**
