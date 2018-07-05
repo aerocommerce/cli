@@ -22,21 +22,3 @@ aero new my-site
 ```
 
 This will download the latest version and install it into the `my-site` directory.
-
-
-## Updating Aero Commerce
-
-From within an existing Aero Commerce project root directory, you may use the following command to update to the latest version.
-
-```
-aero update
-```
-
-
-## Checking Aero Commerce Versions
-
-From within an existing Aero Commerce project root directory, you may run the following command to quickly find out which version is being used.
-
-```
-aero version
-```
