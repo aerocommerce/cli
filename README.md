@@ -1,6 +1,6 @@
 # Aero Commerce CLI Tool
 
-> Install and manage your Aero Commerce projects from the command line.
+> A command line installer for your Aero Commerce projects.
 
 ## Installing the package
 
