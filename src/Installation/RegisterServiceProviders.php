@@ -46,7 +46,7 @@ class RegisterServiceProviders
 
         $contents = str_replace(
             '        App\\Providers\\AppServiceProvider::class,',
-            "        ".implode("::class,\n        ", $providers)."::class,\n        App\Providers\AppServiceProvider::class,",
+            '        '.implode("::class,\n        ", $providers)."::class,\n        App\Providers\AppServiceProvider::class,",
             $contents
         );
 
