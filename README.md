@@ -10,7 +10,7 @@ composer global require aerocommerce/cli
 
 Make sure to place the `$HOME/.composer/vendor/bin` directory (or the equivalent directory for your OS) in your `$PATH` so that the `aero` executable can be located by your system.
 
-Once installed, you should be able to run `aero {command name}` from within any directory.
+Once installed, you should be able to run `aero {command}` from within any directory.
 
 
 ## Installing Aero Commerce
