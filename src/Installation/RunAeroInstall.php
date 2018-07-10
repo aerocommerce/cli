@@ -2,8 +2,8 @@
 
 namespace Aero\Cli\Installation;
 
-use Symfony\Component\Process\Process;
 use Aero\Cli\NewCommand;
+use Symfony\Component\Process\Process;
 
 class RunAeroInstall
 {
