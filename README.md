@@ -15,7 +15,7 @@ Once installed, you should be able to run `aero {command}` from within any direc
 
 ## Installing Aero Commerce
 
-You may create a new Aero Commerce site with the `new` command:
+Use the `new` command to create a new Aero Commerce site:
 
 ```
 aero new my-site
