@@ -64,7 +64,7 @@ class NewCommand extends SymfonyCommand
             Installation\AeroStructure::class,
             Installation\UpdateComposerFile::class,
             Installation\ComposerUpdate::class,
-            Installation\RegisterServiceProviders::class,
+            Installation\RunAeroInstall::class,
         ];
 
         foreach ($installers as $installer) {

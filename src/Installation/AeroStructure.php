@@ -26,10 +26,14 @@ class AeroStructure
      */
     public function install()
     {
-        mkdir($this->command->path.'/aero');
+        $path = $this->command->path.'/aero';
+
+        mkdir($path);
 
         if ($this->command->input->getOption('internal')) {
-            mkdir($this->command->path.'/aero/repositories');
+            mkdir($path.'/repositories');
         }
+
+        mkdir($path.'/themes');
     }
 }

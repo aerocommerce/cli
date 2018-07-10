@@ -101,9 +101,12 @@ class UpdateComposerFile
 
         symlink($helper->ask($this->command->input, $this->command->output, $question), $corePath);
 
-        $composer['autoload']['psr-4']['Aero\\Core\\'] = $corePath;
+        $composer['require']['aerocommerce/core'] = 'dev-master';
 
-        unset($composer['require']['aerocommerce/core']);
+        $composer['repositories'][] = [
+            'type' => 'path',
+            'url' => $corePath,
+        ];
 
         return $composer;
     }
