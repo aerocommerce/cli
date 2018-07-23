@@ -38,7 +38,8 @@ class NewCommand extends SymfonyCommand
         Development\ComposerCGRInstall::class,
         Development\InstallPHP::class,
         Development\ValetPlus::class,
-        Development\InstallElasticSearch::class
+        Development\InstallElasticSearch::class,
+        Development\CreateProject::class
     ];
 
     public $project = [
@@ -89,12 +90,11 @@ class NewCommand extends SymfonyCommand
     protected function getInstallers()
     {
         if ($this->input->getOption('internal')) {
-            return $installers = array_merge($this->environment, $this->project);
+            return $this->environment;
         }
 
         return $installers = [
             Installation\CreateLaravelProject::class,
-            Installation\AeroStructure::class,
             Installation\UpdateComposerFile::class,
             Installation\ComposerUpdate::class,
             Installation\RunAeroInstall::class,

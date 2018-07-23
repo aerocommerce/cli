@@ -73,7 +73,7 @@ class UpdateComposerFile
      */
     protected function addInternalDependencies($composer)
     {
-        $composer['require']['aerocommerce/core'] = 'dev-master';
+        $composer['require']['aerocommerce/framework'] = 'dev-master';
 
         return $composer;
     }
