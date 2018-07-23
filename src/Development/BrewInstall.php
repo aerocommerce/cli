@@ -3,8 +3,8 @@
 namespace Aero\Cli\Development;
 
 use Aero\Cli\NewCommand;
-use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Process\Process;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 class BrewInstall
 {
@@ -36,7 +36,7 @@ class BrewInstall
     private function installBrew()
     {
         if ($this->brewDoesNotExist()) {
-            $this->command->output->writeln("<info>Brew is required for Valet Plus</info>");
+            $this->command->output->writeln('<info>Brew is required for Valet Plus</info>');
 
             $helper = $this->command->getHelper('question');
             $question = new ConfirmationQuestion('Install Brew? (Y/N)', false);

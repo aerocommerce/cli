@@ -16,7 +16,7 @@ class InstallComposer
 
     public function install()
     {
-        $this->command->output->writeln("<info>Installing Composer</info>");
+        $this->command->output->writeln('<info>Installing Composer</info>');
         if ($this->composerDoestNotExist()) {
             $composer = new Process('brew install composer');
             $composer->run(function ($type, $line) {
