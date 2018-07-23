@@ -3,8 +3,8 @@
 namespace Aero\Cli\Development;
 
 use Aero\Cli\NewCommand;
-use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Process\Process;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 class ValetPlus
 {
@@ -16,13 +16,13 @@ class ValetPlus
     }
 
     /**
-     * Install Valet Plus
+     * Install Valet Plus.
      */
     public function install()
     {
-        $this->command->output->writeln("<info>Valet Plus Installer</info>");
+        $this->command->output->writeln('<info>Valet Plus Installer</info>');
 
-        if (!$this->globalWeProvidePackages()->contains('valet-plus')) {
+        if (! $this->globalWeProvidePackages()->contains('valet-plus')) {
             $this->installValetPlus();
         }
     }
@@ -45,11 +45,11 @@ class ValetPlus
     }
 
     /**
-     * Install Valet Plus
+     * Install Valet Plus.
      */
     private function installValetPlus()
     {
-        $this->command->output->writeln("<info>Valet Plus was not detected on your system and is the recommended development environment for Aero Commerce.</info>");
+        $this->command->output->writeln('<info>Valet Plus was not detected on your system and is the recommended development environment for Aero Commerce.</info>');
 
         $helper = $this->command->getHelper('question');
         $question = new ConfirmationQuestion('Install Valet Plus? (Y/N)', false);
@@ -66,7 +66,7 @@ class ValetPlus
     }
 
     /**
-     * Composer require Valet Plus
+     * Composer require Valet Plus.
      */
     private function composerRequireValetPlus()
     {
@@ -75,7 +75,6 @@ class ValetPlus
             $this->command->output->write($line);
         });
     }
-
 
     /**
      * Run valet fix.
@@ -105,7 +104,7 @@ class ValetPlus
      */
     private function removeLaravelValet()
     {
-        $this->command->output->writeln("<warning>Removing Larvel Valet</warning>");
+        $this->command->output->writeln('<warning>Removing Larvel Valet</warning>');
 
         $uninstall = new Process('valet uninstall');
         $uninstall->run(function ($type, $line) {
@@ -113,7 +112,7 @@ class ValetPlus
         });
 
         $remove = new Process('composer global remove laravel/valet');
-        $remove->run(function($type, $line) {
+        $remove->run(function ($type, $line) {
             $this->command->output->write($line);
         });
     }

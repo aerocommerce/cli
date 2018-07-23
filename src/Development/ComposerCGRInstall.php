@@ -16,7 +16,7 @@ class ComposerCGRInstall
 
     public function install()
     {
-        $this->command->output->writeln("<info>Installing Composer CGR - Prevents Global Conflicts.</info>");
+        $this->command->output->writeln('<info>Installing Composer CGR - Prevents Global Conflicts.</info>');
         $process = new Process('composer global require consolidation/cgr');
 
         $process->run(function ($type, $line) {

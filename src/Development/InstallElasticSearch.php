@@ -18,7 +18,7 @@ class InstallElasticSearch
     {
         $elastic = new Process('brew install elasticsearch');
 
-        $elastic->run(function($type, $line) {
+        $elastic->run(function ($type, $line) {
             $this->command->output->write($line);
         });
     }
