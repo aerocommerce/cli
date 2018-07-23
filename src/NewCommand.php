@@ -39,7 +39,7 @@ class NewCommand extends SymfonyCommand
         Development\InstallPHP::class,
         Development\ValetPlus::class,
         Development\InstallElasticSearch::class,
-        Development\CreateProject::class
+        Development\CreateProject::class,
     ];
 
     public $project = [

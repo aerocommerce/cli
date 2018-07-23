@@ -10,16 +10,16 @@ class CreateLaravelProject
     public function __construct(NewCommand $command, $path)
     {
         $this->command = $command;
-        $this->path = $path;
+        $this->path = expand_tilde($path);
     }
 
     public function install()
     {
-        if (!file_exists(expand_tilde($this->path))) {
-            mkdir(expand_tilde($this->path));
+        if (! file_exists($this->path)) {
+            mkdir($this->path);
         }
 
-        $process = new Process('cd '. expand_tilde($this->path) .';laravel new aero');
+        $process = new Process('laravel new aero', $this->path);
 
         if ('\\' !== DIRECTORY_SEPARATOR && file_exists('/dev/tty') && is_readable('/dev/tty')) {
             $process->setTty(true);
