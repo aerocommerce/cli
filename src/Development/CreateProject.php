@@ -2,7 +2,7 @@
 
 namespace Aero\Cli\Development;
 
-use Aero\Cli\NewCommand;
+use Aero\Cli\DevCommand;
 use Symfony\Component\Console\Question\Question;
 
 class CreateProject
@@ -17,7 +17,7 @@ class CreateProject
         Project\ValetLink::class
     ];
 
-    public function __construct(NewCommand $command)
+    public function __construct(DevCommand $command)
     {
         $this->command = $command;
     }

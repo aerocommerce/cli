@@ -2,7 +2,7 @@
 
 namespace Aero\Cli\Development\Project;
 
-use Aero\Cli\NewCommand;
+use Aero\Cli\DevCommand;
 use Symfony\Component\Process\Process;
 
 class ValetLink
@@ -10,7 +10,7 @@ class ValetLink
     private $command;
     private $path;
 
-    public function __construct(NewCommand $command, $path)
+    public function __construct(DevCommand $command, $path)
     {
         $this->command = $command;
         $this->path = expand_tilde($path);

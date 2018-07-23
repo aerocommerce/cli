@@ -2,7 +2,6 @@
 
 namespace Aero\Cli;
 
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -32,19 +31,8 @@ class NewCommand extends SymfonyCommand
      */
     public $path;
 
-    public $environment = [
-        Development\BrewInstall::class,
-        Development\InstallComposer::class,
-        Development\ComposerCGRInstall::class,
-        Development\InstallPHP::class,
-        Development\ValetPlus::class,
-        Development\InstallElasticSearch::class,
-        Development\CreateProject::class,
-    ];
-
-    public $project = [
+    public $installers = [
         Installation\CreateLaravelProject::class,
-        Installation\AeroStructure::class,
         Installation\UpdateComposerFile::class,
         Installation\ComposerUpdate::class,
         Installation\RunAeroInstall::class,
@@ -59,14 +47,13 @@ class NewCommand extends SymfonyCommand
     {
         $this->setName('new')
             ->setDescription('Create a new Aero Commerce application.')
-            ->addArgument('name', InputArgument::REQUIRED)
-            ->addOption('internal', null, InputOption::VALUE_NONE, 'Configure the project to use local Aero Commerce packages.');
+            ->addArgument('name', InputArgument::REQUIRED);
     }
 
     /**
      * Execute the command.
      *
-     * @param  InputInterface $input
+     * @param  InputInterface  $input
      * @param  OutputInterface $output
      * @return void
      */
@@ -75,7 +62,7 @@ class NewCommand extends SymfonyCommand
         $this->input = $input;
         $this->output = new SymfonyStyle($input, $output);
 
-        $this->path = getcwd().'/'.$input->getArgument('name');
+        $this->path = getcwd() . '/' . $input->getArgument('name');
 
         $installers = $this->getInstallers();
 
@@ -89,15 +76,6 @@ class NewCommand extends SymfonyCommand
      */
     protected function getInstallers()
     {
-        if ($this->input->getOption('internal')) {
-            return $this->environment;
-        }
-
-        return $installers = [
-            Installation\CreateLaravelProject::class,
-            Installation\UpdateComposerFile::class,
-            Installation\ComposerUpdate::class,
-            Installation\RunAeroInstall::class,
-        ];
+        return $this->installers;
     }
 }

@@ -14,9 +14,8 @@ class CreateLaravelProject
     /**
      * Create a new installation helper instance.
      *
-     * @param  NewCommand $command
-     * @param  string $name
-     * @return void
+     * @param NewCommand $command
+     * @param  string    $name
      */
     public function __construct(NewCommand $command, $name)
     {

@@ -12,8 +12,7 @@ class ComposerUpdate
     /**
      * Create a new installation helper instance.
      *
-     * @param  NewCommand $command
-     * @return void
+     * @param NewCommand $command
      */
     public function __construct(NewCommand $command)
     {

@@ -2,7 +2,7 @@
 
 namespace Aero\Cli\Development\Project;
 
-use Aero\Cli\NewCommand;
+use Aero\Cli\DevCommand;
 use Symfony\Component\Process\Process;
 
 class UpdateComposer
@@ -12,10 +12,10 @@ class UpdateComposer
     /**
      * Create a new installation helper instance.
      *
-     * @param  NewCommand $command
+     * @param  DevCommand $command
      * @param             $path
      */
-    public function __construct(NewCommand $command, $path)
+    public function __construct(DevCommand $command, $path)
     {
         $this->command = $command;
         $this->path = expand_tilde($path);

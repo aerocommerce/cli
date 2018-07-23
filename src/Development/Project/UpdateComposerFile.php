@@ -2,7 +2,7 @@
 
 namespace Aero\Cli\Development\Project;
 
-use Aero\Cli\NewCommand;
+use Aero\Cli\DevCommand;
 
 class UpdateComposerFile
 {
@@ -12,10 +12,10 @@ class UpdateComposerFile
     /**
      * Create a new installation helper instance.
      *
-     * @param  NewCommand $command
+     * @param  DevCommand $command
      * @param             $path
      */
-    public function __construct(NewCommand $command, $path)
+    public function __construct(DevCommand $command, $path)
     {
         $this->path = expand_tilde($path);
         $this->command = $command;

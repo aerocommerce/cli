@@ -2,14 +2,14 @@
 
 namespace Aero\Cli\Development;
 
-use Aero\Cli\NewCommand;
+use Aero\Cli\DevCommand;
 use Symfony\Component\Process\Process;
 
 class InstallElasticSearch
 {
     private $command;
 
-    public function __construct(NewCommand $command)
+    public function __construct(DevCommand $command)
     {
         $this->command = $command;
     }
