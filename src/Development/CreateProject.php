@@ -10,7 +10,11 @@ class CreateProject
     private $command;
 
     private $installers = [
-       Project\CreateLaravelProject::class,
+        Project\CreateLaravelProject::class,
+        Project\CreateFramework::class,
+        Project\UpdateComposerFile::class,
+        Project\UpdateComposer::class,
+        Project\ValetLink::class
     ];
 
     public function __construct(NewCommand $command)
@@ -21,12 +25,13 @@ class CreateProject
     public function install()
     {
         $helper = $this->command->getHelper('question');
-        $question = new Question('Where do you wish the Aero Project to be installed? (Default: Current Directory', getcwd());
+        $question = new Question('Where do you wish the Aero Project to be installed? (Default: Current Directory',
+            getcwd());
 
         $installPath = $helper->ask($this->command->input, $this->command->output, $question);
 
         foreach ($this->installers as $installer) {
-            (new $installer($this->command, $this->command->input->getArgument('name'), $installPath))->install();
+            (new $installer($this->command, $installPath))->install();
         }
     }
 }

@@ -5,27 +5,36 @@ namespace Aero\Cli\Development\Project;
 use Aero\Cli\NewCommand;
 use Symfony\Component\Process\Process;
 
-class CreateLaravelProject
+class UpdateComposer
 {
+    protected $command;
+
+    /**
+     * Create a new installation helper instance.
+     *
+     * @param  NewCommand $command
+     * @param             $path
+     */
     public function __construct(NewCommand $command, $path)
     {
         $this->command = $command;
-        $this->path = $path;
+        $this->path = expand_tilde($path);
     }
 
+    /**
+     * Run the installation helper.
+     *
+     * @return void
+     */
     public function install()
     {
-        if (!file_exists(expand_tilde($this->path))) {
-            mkdir(expand_tilde($this->path));
-        }
-
-        $process = new Process('cd '. expand_tilde($this->path) .';laravel new aero');
+        $process = (new Process('composer update', $this->path . '/aero'))->setTimeout(null);
 
         if ('\\' !== DIRECTORY_SEPARATOR && file_exists('/dev/tty') && is_readable('/dev/tty')) {
             $process->setTty(true);
         }
 
-        $process->setTimeout(null)->run(function ($type, $line) {
+        $process->run(function ($type, $line) {
             $this->command->output->write($line);
         });
     }
