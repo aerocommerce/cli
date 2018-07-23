@@ -18,8 +18,8 @@ class ValetLink
 
     public function install()
     {
-        $valet = new Process('valet link', $this->path . '/aero');
-        $valet->run(function($type, $line) {
+        $valet = new Process('valet link', $this->path.'/aero');
+        $valet->run(function ($type, $line) {
             $this->command->output->write($line);
         });
     }

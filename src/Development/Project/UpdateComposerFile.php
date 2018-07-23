@@ -72,7 +72,7 @@ class UpdateComposerFile
 
         $composer['repositories'][] = [
             'type' => 'path',
-            'url' => $this->path . '/framework',
+            'url' => $this->path.'/framework',
         ];
 
         return $composer;
