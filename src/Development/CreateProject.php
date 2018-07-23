@@ -14,7 +14,7 @@ class CreateProject
         Project\CreateFramework::class,
         Project\UpdateComposerFile::class,
         Project\UpdateComposer::class,
-        Project\ValetLink::class
+        Project\ValetLink::class,
     ];
 
     public function __construct(DevCommand $command)

@@ -18,15 +18,15 @@ class CreateFramework
 
     public function install()
     {
-        mkdir($this->path . '/framework');
+        mkdir($this->path.'/framework');
 
-        $process = new Process('git clone git@github.com:aerocommerce/framework.git .', $this->path . '/framework');
-        $process->run(function($type, $line) {
+        $process = new Process('git clone git@github.com:aerocommerce/framework.git .', $this->path.'/framework');
+        $process->run(function ($type, $line) {
             $this->command->output->write($line);
         });
 
-        $composer = new Process('composer install', $this->path . '/framework');
-        $composer->run(function($type, $line) {
+        $composer = new Process('composer install', $this->path.'/framework');
+        $composer->run(function ($type, $line) {
             $this->command->output->write($line);
         });
     }
