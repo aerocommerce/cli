@@ -32,6 +32,23 @@ class NewCommand extends SymfonyCommand
      */
     public $path;
 
+    public $environment = [
+        Development\BrewInstall::class,
+        Development\InstallComposer::class,
+        Development\ComposerCGRInstall::class,
+        Development\InstallPHP::class,
+        Development\ValetPlus::class,
+        Development\InstallElasticSearch::class
+    ];
+
+    public $project = [
+        Installation\CreateLaravelProject::class,
+        Installation\AeroStructure::class,
+        Installation\UpdateComposerFile::class,
+        Installation\ComposerUpdate::class,
+        Installation\RunAeroInstall::class,
+    ];
+
     /**
      * Configure the command options.
      *
@@ -59,16 +76,28 @@ class NewCommand extends SymfonyCommand
 
         $this->path = getcwd().'/'.$input->getArgument('name');
 
-        $installers = [
+        $installers = $this->getInstallers();
+
+        foreach ($installers as $installer) {
+            (new $installer($this, $input->getArgument('name')))->install();
+        }
+    }
+
+    /**
+     * @return array
+     */
+    protected function getInstallers()
+    {
+        if ($this->input->getOption('internal')) {
+            return $installers = array_merge($this->environment, $this->project);
+        }
+
+        return $installers = [
             Installation\CreateLaravelProject::class,
             Installation\AeroStructure::class,
             Installation\UpdateComposerFile::class,
             Installation\ComposerUpdate::class,
             Installation\RunAeroInstall::class,
         ];
-
-        foreach ($installers as $installer) {
-            (new $installer($this, $input->getArgument('name')))->install();
-        }
     }
 }
