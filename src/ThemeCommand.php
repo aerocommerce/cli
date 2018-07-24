@@ -2,11 +2,11 @@
 
 namespace Aero\Cli;
 
+use Symfony\Component\Process\Process;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Process;
 
 class ThemeCommand extends Command
 {
@@ -44,7 +44,7 @@ class ThemeCommand extends Command
 
     private function isAeroProject()
     {
-        $composer = collect(json_decode(file_get_contents($this->path . '/composer.json')));
+        $composer = collect(json_decode(file_get_contents($this->path.'/composer.json')));
 
         if ($composer->isEmpty()) {
             return false;
@@ -59,7 +59,7 @@ class ThemeCommand extends Command
 
     protected function makeThemeDirectories(): void
     {
-        $process = new Process('mkdir aero; cd aero; mkdir themes; cd themes; mkdir ' . $this->theme, $this->path);
+        $process = new Process('mkdir aero; cd aero; mkdir themes; cd themes; mkdir '.$this->theme, $this->path);
         $process->run();
     }
 
@@ -68,7 +68,7 @@ class ThemeCommand extends Command
      */
     private function copyTemplateFiles()
     {
-        $process = new Process('touch welcome.blade.php', $this->path . '/aero/themes/' . $this->theme);
+        $process = new Process('touch welcome.blade.php', $this->path.'/aero/themes/'.$this->theme);
         $process->run();
     }
 }
