@@ -16,5 +16,9 @@ define('AERO_HOME_PATH', $_SERVER['HOME'].'/.aero');
 $app = new Symfony\Component\Console\Application('Aero Commerce CLI Tool', '1.0.0');
 $app->add(new Aero\Cli\NewCommand);
 $app->add(new Aero\Cli\DevCommand);
+$app->add(new Aero\Cli\ThemeCommand);
 
-$app->run();
+try {
+    $app->run();
+} catch (Exception $e) {
+}
