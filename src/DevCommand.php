@@ -18,6 +18,7 @@ class DevCommand extends SymfonyCommand
         Development\InstallElasticSearch::class,
         Development\CreateProject::class,
     ];
+
     /**
      * Configure the command options.
      *
