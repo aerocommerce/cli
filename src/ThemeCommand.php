@@ -31,14 +31,14 @@ class ThemeCommand extends Command
         $this->path = expand_tilde($input->getArgument('path')) ?? getcwd();
 
         if ($this->isAeroProject()) {
-            $this->output->writeln("Creating directories for your Aero Commerce theme.");
+            $this->output->writeln('Creating directories for your Aero Commerce theme.');
             $this->makeThemeDirectories();
-            $this->output->writeln("Generating template stubs.");
+            $this->output->writeln('Generating template stubs.');
             $this->copyTemplateFiles();
             $this->output->writeln("Success! Your new \"{$this->theme}\" has been created.");
-            $this->output->writeln("Do not forget to update your Aero configuration.");
+            $this->output->writeln('Do not forget to update your Aero configuration.');
         } else {
-            $this->output->writeln("Specified path is not an Aero project. Please try again.");
+            $this->output->writeln('Specified path is not an Aero project. Please try again.');
         }
     }
 
