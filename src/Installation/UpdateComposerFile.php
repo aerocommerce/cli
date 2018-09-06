@@ -11,6 +11,16 @@ class UpdateComposerFile
 
     protected $name;
 
+    protected $dependencies = [
+        'aerocommerce/framework' => 'dev-master',
+    ];
+
+    protected $internalDependencies = [];
+
+    protected $repositories = [
+        'aerocommerce/framework' => 'framework',
+    ];
+
     /**
      * Create a new installation helper instance.
      *
@@ -59,7 +69,9 @@ class UpdateComposerFile
      */
     protected function addDependencies($composer)
     {
-        $composer['require']['aerocommerce/core'] = 'dev-master';
+        foreach ($this->dependencies as $dependency => $version) {
+            $composer['require'][$dependency] = $version;
+        }
 
         return $composer;
     }
@@ -72,7 +84,9 @@ class UpdateComposerFile
      */
     protected function addInternalDependencies($composer)
     {
-        $composer['require']['aerocommerce/framework'] = 'dev-master';
+        foreach ($this->internalDependencies as $dependency => $version) {
+            $composer['require'][$dependency] = $version;
+        }
 
         return $composer;
     }
@@ -85,10 +99,29 @@ class UpdateComposerFile
      */
     protected function addInternalRepositories($composer)
     {
+        foreach ($this->repositories as $repository => $path) {
+            $composer = $this->addInternalRepository($composer, $repository, $path);
+        }
+
+        return $composer;
+    }
+
+    /**
+     * Add an internal repository to the Composer array.
+     *
+     * @param $composer
+     * @param $repository
+     * @param $path
+     * @return mixed
+     */
+    protected function addInternalRepository($composer, $repository, $path)
+    {
         $helper = $this->command->getHelper('question');
 
-        $question = new Question('Please enter the path to aerocommerce/core: ');
+        $question = new Question("Please enter the path to {$repository}: ");
         $question->setValidator(function ($answer) {
+            $answer = expand_tilde($answer);
+
             if (! is_dir($answer)) {
                 throw new \RuntimeException('The path does not exist.');
             }
@@ -96,15 +129,15 @@ class UpdateComposerFile
             return $answer;
         });
 
-        $corePath = $this->command->path.'/aero/repositories/core';
+        $path = $this->command->path.'/aero/repositories/'.$path;
 
-        symlink($helper->ask($this->command->input, $this->command->output, $question), $corePath);
+        symlink($helper->ask($this->command->input, $this->command->output, $question), $path);
 
-        $composer['require']['aerocommerce/core'] = 'dev-master';
+        $composer['require'][$repository] = '*';
 
         $composer['repositories'][] = [
             'type' => 'path',
-            'url' => $corePath,
+            'url' => $path,
         ];
 
         return $composer;

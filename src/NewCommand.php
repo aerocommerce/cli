@@ -33,6 +33,7 @@ class NewCommand extends SymfonyCommand
 
     public $installers = [
         Installation\CreateLaravelProject::class,
+        Installation\AeroStructure::class,
         Installation\UpdateComposerFile::class,
         Installation\ComposerUpdate::class,
         Installation\RunAeroInstall::class,
@@ -47,6 +48,7 @@ class NewCommand extends SymfonyCommand
     {
         $this->setName('new')
             ->setDescription('Create a new Aero Commerce application.')
+            ->addOption('internal', InputArgument::OPTIONAL)
             ->addArgument('name', InputArgument::REQUIRED);
     }
 
