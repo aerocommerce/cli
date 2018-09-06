@@ -36,6 +36,7 @@ class NewCommand extends SymfonyCommand
         Installation\AeroStructure::class,
         Installation\UpdateComposerFile::class,
         Installation\ComposerUpdate::class,
+        Installation\InstallProviders::class,
         Installation\RunAeroInstall::class,
     ];
 
