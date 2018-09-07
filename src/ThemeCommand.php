@@ -18,7 +18,7 @@ class ThemeCommand extends Command
     protected function configure()
     {
         $this->setName('theme')
-            ->setDescription('Create a new Aero Commerce them.')
+            ->setDescription('Create a new Aero Commerce theme.')
             ->addArgument('name', InputArgument::REQUIRED)
             ->addArgument('path', InputArgument::OPTIONAL);
     }
