@@ -17,7 +17,7 @@
       "Aero\\Cli\\": "src/"
     },
     "files": [
-      "src/helpers/helpers.php"
+      "src/Support/helpers.php"
     ]
   },
   "require": {
