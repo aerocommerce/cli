@@ -54,6 +54,10 @@ class RunAeroInstall
             $command .= ' --internal';
         }
 
+        if (defined('AERO_REPOSITORY_AEROCOMMERCEFRAMEWORK_PATH')) {
+            $command .= '--framework='.AERO_REPOSITORY_AEROCOMMERCEFRAMEWORK_PATH;
+        }
+
         return $command;
     }
 }

@@ -119,11 +119,17 @@ class UpdateComposerFile
         $helper = $this->command->getHelper('question');
 
         $question = new Question("Please enter the path to {$repository}: ");
-        $question->setValidator(function ($answer) {
+        $question->setValidator(function ($answer) use ($repository) {
             $answer = expand_tilde($answer);
 
             if (! is_dir($answer)) {
                 throw new \RuntimeException('The path does not exist.');
+            }
+
+            $constant = 'AERO_REPOSITORY_'.strtoupper(preg_replace("/[^a-z0-9.]+/i", '', $repository)).'_PATH';
+
+            if (! defined($constant)) {
+                define($constant, $answer);
             }
 
             return $answer;
