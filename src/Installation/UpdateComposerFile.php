@@ -126,7 +126,7 @@ class UpdateComposerFile
                 throw new \RuntimeException('The path does not exist.');
             }
 
-            $constant = 'AERO_REPOSITORY_'.strtoupper(preg_replace("/[^a-z0-9.]+/i", '', $repository)).'_PATH';
+            $constant = 'AERO_REPOSITORY_'.strtoupper(preg_replace('/[^a-z0-9.]+/i', '', $repository)).'_PATH';
 
             if (! defined($constant)) {
                 define($constant, $answer);
