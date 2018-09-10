@@ -50,6 +50,10 @@ class RunAeroInstall
     {
         $command = 'php artisan aero:install --force';
 
+        if ($this->command->input->getOption('internal')) {
+            $command .= ' --internal';
+        }
+
         return $command;
     }
 }
