@@ -120,7 +120,15 @@ class UpdateComposerFile
 
         $default = realpath($this->command->path."/../{$path}");
 
-        $question = new Question("Please enter the path to {$repository} [{$default}]: ", $default);
+        $text = "Please enter the path to {$repository}";
+
+        if (is_dir($default)) {
+            $text .= " [{$default}]";
+        } else {
+            $default = null;
+        }
+
+        $question = new Question($text.':', $default);
         $question->setValidator(function ($answer) use ($repository) {
             $answer = expand_tilde($answer);
 
