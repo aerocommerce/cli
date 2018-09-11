@@ -118,7 +118,9 @@ class UpdateComposerFile
     {
         $helper = $this->command->getHelper('question');
 
-        $question = new Question("Please enter the path to {$repository}: ");
+        $default = realpath($this->command->path."/../{$path}");
+
+        $question = new Question("Please enter the path to {$repository} [{$default}]: ", $default);
         $question->setValidator(function ($answer) use ($repository) {
             $answer = expand_tilde($answer);
 
