@@ -21,6 +21,8 @@ class CreateLaravelProject
     {
         $this->name = $name;
         $this->command = $command;
+
+        $this->command->output->write('Installing Laravel');
     }
 
     /**
@@ -30,7 +32,7 @@ class CreateLaravelProject
      */
     public function install()
     {
-        $process = new Process('laravel new '.$this->name.' -q');
+        $process = new Process('laravel new '.$this->name.' --quiet');
 
         if ('\\' !== DIRECTORY_SEPARATOR && file_exists('/dev/tty') && is_readable('/dev/tty')) {
             $process->setTty(true);
@@ -39,5 +41,7 @@ class CreateLaravelProject
         $process->setTimeout(null)->run(function ($type, $line) {
             $this->command->output->write($line);
         });
+
+        $this->command->output->writeln(': <info>✔</info>');
     }
 }
