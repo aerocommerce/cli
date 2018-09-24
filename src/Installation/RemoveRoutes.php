@@ -42,7 +42,7 @@ class RemoveRoutes
 
         $contents = preg_replace(
             '/(^Route::.*\;)/ms',
-            "// To enable custom routes for your application, enable the App\Providers\RouteServiceProvider in config/app.php",
+            "// To enable custom routes for your application, enable App\Providers\RouteServiceProvider in config/app.php",
             $contents
         );
 
