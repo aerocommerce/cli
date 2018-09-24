@@ -55,6 +55,7 @@ class RemoveRoutes
 
         $this->updateFile($path);
     }
+
     protected function removeApiRoutes()
     {
         $path = $this->command->path.'/routes/api.php';
