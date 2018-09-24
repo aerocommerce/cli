@@ -37,7 +37,7 @@ class RemoveProviders
 
         $contents = str_replace(
             '        App\\Providers\\RouteServiceProvider::class,',
-            "        // App\\Providers\\RouteServiceProvider::class,",
+            '        // App\\Providers\\RouteServiceProvider::class,',
             $contents
         );
 
