@@ -11,8 +11,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ThemeCommand extends Command
 {
     private $input;
+
     private $output;
+
     private $theme;
+
     private $path;
 
     protected function configure()
@@ -57,7 +60,7 @@ class ThemeCommand extends Command
         })->has('aerocommerce/framework');
     }
 
-    protected function makeThemeDirectories(): void
+    protected function makeThemeDirectories() : void
     {
         $process = new Process('mkdir aero; cd aero; mkdir themes; cd themes; mkdir '.$this->theme, $this->path);
         $process->run();

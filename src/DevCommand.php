@@ -26,8 +26,7 @@ class DevCommand extends SymfonyCommand
      */
     protected function configure()
     {
-        $this->setName('dev')
-            ->setDescription('Create a new Aero Commerce application.');
+        $this->setName('dev')->setDescription('Create a new Aero Commerce application.');
     }
 
     /**

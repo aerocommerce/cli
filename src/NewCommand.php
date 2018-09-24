@@ -37,7 +37,9 @@ class NewCommand extends SymfonyCommand
         Installation\UpdateComposerFile::class,
         Installation\ComposerUpdate::class,
         Installation\InstallProviders::class,
-        Installation\RunAeroInstall::class,
+        Installation\RemoveProviders::class,
+        Installation\RemoveRoutes::class,
+        // Installation\RunAeroInstall::class,
     ];
 
     /**
@@ -56,7 +58,7 @@ class NewCommand extends SymfonyCommand
     /**
      * Execute the command.
      *
-     * @param  InputInterface  $input
+     * @param  InputInterface $input
      * @param  OutputInterface $output
      * @return void
      */

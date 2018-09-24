@@ -28,12 +28,10 @@ class AeroStructure
     {
         $path = $this->command->path.'/aero';
 
-        mkdir($path);
+        @mkdir($path);
 
         if ($this->command->input->getOption('internal')) {
             mkdir($path.'/repositories');
         }
-
-        mkdir($path.'/themes');
     }
 }
