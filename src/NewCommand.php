@@ -39,6 +39,7 @@ class NewCommand extends SymfonyCommand
         Installation\InstallProviders::class,
         Installation\RemoveProviders::class,
         Installation\RemoveRoutes::class,
+        Installation\SwapRequestClass::class,
         // Installation\RunAeroInstall::class,
     ];
 
