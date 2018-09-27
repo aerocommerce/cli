@@ -2,26 +2,21 @@
 
 namespace Aero\Cli\Installation;
 
-use Aero\Cli\NewCommand;
+use Aero\Cli\InstallStep;
+use Aero\Cli\Command;
 
-class InstallProviders
+class InstallProviders extends InstallStep
 {
-    protected $command;
-
-    protected $name;
-
     /**
      * Create a new installation helper instance.
      *
-     * @param NewCommand $command
-     * @param  string $name
+     * @param \Aero\Cli\Command $command
      */
-    public function __construct(NewCommand $command, $name)
+    public function __construct(Command $command)
     {
-        $this->command = $command;
-        $this->name = $name;
+        parent::__construct($command);
 
-        $this->command->output->writeln('Installing Service Providers: <info>✔</info>');
+        $this->command->output->write('Installing Service Providers');
     }
 
     /**
@@ -42,5 +37,7 @@ class InstallProviders
         );
 
         file_put_contents($path, $contents);
+
+        $this->command->output->writeln(': <info>✔</info>');
     }
 }

@@ -2,28 +2,29 @@
 
 namespace Aero\Cli;
 
-use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class NewCommand extends Command
+class ThemeInstallCommand extends Command
 {
+    /**
+     * The theme name.
+     *
+     * @var string
+     */
+    public $theme;
+
     /**
      * The installer steps to run.
      *
      * @var array
      */
     protected $installers = [
-        Installation\CreateLaravelProject::class,
         Installation\AeroStructure::class,
-        Installation\UpdateComposerFile::class,
-        Installation\ComposerUpdate::class,
-        Installation\InstallProviders::class,
-        Installation\RemoveProviders::class,
-        Installation\RemoveRoutes::class,
-        Installation\SwapRequestClass::class,
-        // Installation\RunAeroInstall::class,
+        Installation\CreateThemeDirectory::class,
+        Installation\ObtainThemeFiles::class,
+        Installation\SwapThemeEnv::class,
     ];
 
     /**
@@ -33,8 +34,8 @@ class NewCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('new')
-            ->setDescription('Create a new Aero Commerce application.')
+        $this->setName('theme:install')
+            ->setDescription('Install an Aero Commerce theme.')
             ->addOption('internal', InputArgument::OPTIONAL)
             ->addArgument('name', InputArgument::REQUIRED);
     }
@@ -46,14 +47,15 @@ class NewCommand extends Command
      * @param  OutputInterface $output
      * @return void
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output)
     {
         $this->input = $input;
-        $this->output = new SymfonyStyle($input, $output);
-        $this->project = $input->getArgument('name');
-        $this->path = getcwd().'/'.$this->project;
+        $this->output = $output;
+        $this->theme = $input->getArgument('name');
+        $this->path = getcwd();
+        $this->project = basename($this->path);
 
-        $this->verifyApplicationDoesntExist($this->path);
+        $this->verifyIsAeroProject();
 
         $installers = $this->getInstallers();
 

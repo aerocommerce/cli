@@ -2,25 +2,20 @@
 
 namespace Aero\Cli\Installation;
 
-use Aero\Cli\NewCommand;
+use Aero\Cli\InstallStep;
+use Aero\Cli\Command;
 use Symfony\Component\Process\Process;
 
-class CreateLaravelProject
+class CreateLaravelProject extends InstallStep
 {
-    protected $command;
-
-    protected $name;
-
     /**
      * Create a new installation helper instance.
      *
-     * @param NewCommand $command
-     * @param  string $name
+     * @param \Aero\Cli\Command $command
      */
-    public function __construct(NewCommand $command, $name)
+    public function __construct(Command $command)
     {
-        $this->name = $name;
-        $this->command = $command;
+        parent::__construct($command);
 
         $this->command->output->write('Installing Laravel');
     }
@@ -32,7 +27,7 @@ class CreateLaravelProject
      */
     public function install()
     {
-        $process = new Process('laravel new '.$this->name.' --quiet');
+        $process = new Process('laravel new '.$this->command->project.' --quiet');
 
         if ('\\' !== DIRECTORY_SEPARATOR && file_exists('/dev/tty') && is_readable('/dev/tty')) {
             $process->setTty(true);

@@ -2,23 +2,11 @@
 
 namespace Aero\Cli\Installation;
 
-use Aero\Cli\NewCommand;
+use Aero\Cli\InstallStep;
 use Symfony\Component\Process\Process;
 
-class ComposerUpdate
+class ComposerUpdate extends InstallStep
 {
-    protected $command;
-
-    /**
-     * Create a new installation helper instance.
-     *
-     * @param NewCommand $command
-     */
-    public function __construct(NewCommand $command)
-    {
-        $this->command = $command;
-    }
-
     /**
      * Run the installation helper.
      *

@@ -2,23 +2,10 @@
 
 namespace Aero\Cli\Installation;
 
-use Aero\Cli\NewCommand;
+use Aero\Cli\InstallStep;
 
-class AeroStructure
+class AeroStructure extends InstallStep
 {
-    protected $command;
-
-    /**
-     * Create a new installation helper instance.
-     *
-     * @param  NewCommand $command
-     * @return void
-     */
-    public function __construct(NewCommand $command)
-    {
-        $this->command = $command;
-    }
-
     /**
      * Run the installation helper.
      *
@@ -30,8 +17,14 @@ class AeroStructure
 
         @mkdir($path);
 
+        @chmod($path, octdec('0777'));
+
         if ($this->command->input->getOption('internal')) {
-            mkdir($path.'/repositories');
+            @mkdir($path.'/repositories');
         }
+
+        @mkdir($path.'/themes');
+
+        @chmod($path.'/themes', octdec('0777'));
     }
 }

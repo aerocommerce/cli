@@ -2,36 +2,35 @@
 
 namespace Aero\Cli\Installation;
 
-use Aero\Cli\NewCommand;
+use Aero\Cli\InstallStep;
 use Symfony\Component\Console\Question\Question;
 
-class UpdateComposerFile
+class UpdateComposerFile extends InstallStep
 {
-    protected $command;
-
-    protected $name;
-
+    /**
+     * The dependencies required.
+     *
+     * @var array
+     */
     protected $dependencies = [
         'aerocommerce/framework' => 'dev-master',
     ];
 
+    /**
+     * The development dependencies required.
+     *
+     * @var array
+     */
     protected $internalDependencies = [];
 
+    /**
+     * The internal repository mapping when developing internally.
+     *
+     * @var array
+     */
     protected $repositories = [
         'aerocommerce/framework' => 'framework',
     ];
-
-    /**
-     * Create a new installation helper instance.
-     *
-     * @param NewCommand $command
-     * @param  string $name
-     */
-    public function __construct(NewCommand $command, $name)
-    {
-        $this->name = $name;
-        $this->command = $command;
-    }
 
     /**
      * Run the installation helper.
@@ -85,7 +84,7 @@ class UpdateComposerFile
     protected function addInternalDependencies($composer)
     {
         foreach ($this->internalDependencies as $dependency => $version) {
-            $composer['require'][$dependency] = $version;
+            $composer['require-dev'][$dependency] = $version;
         }
 
         return $composer;
@@ -128,8 +127,8 @@ class UpdateComposerFile
             $default = null;
         }
 
-        $question = new Question($text.':', $default);
-        $question->setValidator(function ($answer) use ($repository) {
+        $question = new Question($text.': ', $default);
+        $question->setValidator(function ($answer) {
             $answer = expand_tilde($answer);
 
             if (! is_dir($answer)) {

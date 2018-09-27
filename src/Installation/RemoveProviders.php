@@ -2,26 +2,21 @@
 
 namespace Aero\Cli\Installation;
 
-use Aero\Cli\NewCommand;
+use Aero\Cli\InstallStep;
+use Aero\Cli\Command;
 
-class RemoveProviders
+class RemoveProviders extends InstallStep
 {
-    protected $command;
-
-    protected $name;
-
     /**
      * Create a new installation helper instance.
      *
-     * @param NewCommand $command
-     * @param  string    $name
+     * @param \Aero\Cli\Command $command
      */
-    public function __construct(NewCommand $command, $name)
+    public function __construct(Command $command)
     {
-        $this->command = $command;
-        $this->name = $name;
+        parent::__construct($command);
 
-        $this->command->output->writeln('Removing Service Providers: <info>✔</info>');
+        $this->command->output->write('Removing Service Provider');
     }
 
     /**
@@ -42,5 +37,7 @@ class RemoveProviders
         );
 
         file_put_contents($path, $contents);
+
+        $this->command->output->writeln(': <info>✔</info>');
     }
 }

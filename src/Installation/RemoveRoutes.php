@@ -2,26 +2,21 @@
 
 namespace Aero\Cli\Installation;
 
-use Aero\Cli\NewCommand;
+use Aero\Cli\InstallStep;
+use Aero\Cli\Command;
 
-class RemoveRoutes
+class RemoveRoutes extends InstallStep
 {
-    protected $command;
-
-    protected $name;
-
     /**
      * Create a new installation helper instance.
      *
-     * @param NewCommand $command
-     * @param  string    $name
+     * @param \Aero\Cli\Command $command
      */
-    public function __construct(NewCommand $command, $name)
+    public function __construct(Command $command)
     {
-        $this->command = $command;
-        $this->name = $name;
+        parent::__construct($command);
 
-        $this->command->output->writeln('Removing Default Routes: <info>✔</info>');
+        $this->command->output->write('Removing Default Routes');
     }
 
     /**
@@ -36,6 +31,11 @@ class RemoveRoutes
         $this->removeApiRoutes();
     }
 
+    /**
+     * Update the file to remove the routes.
+     *
+     * @param $path
+     */
     protected function updateFile($path)
     {
         $contents = file_get_contents($path);
@@ -47,8 +47,13 @@ class RemoveRoutes
         );
 
         file_put_contents($path, $contents);
+
+        $this->command->output->writeln(': <info>✔</info>');
     }
 
+    /**
+     * Remove the web routes.
+     */
     protected function removeWebRoutes()
     {
         $path = $this->command->path.'/routes/web.php';
@@ -56,6 +61,9 @@ class RemoveRoutes
         $this->updateFile($path);
     }
 
+    /**
+     * Remove the API routes.
+     */
     protected function removeApiRoutes()
     {
         $path = $this->command->path.'/routes/api.php';

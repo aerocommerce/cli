@@ -2,27 +2,11 @@
 
 namespace Aero\Cli\Installation;
 
-use Aero\Cli\NewCommand;
+use Aero\Cli\InstallStep;
 use Symfony\Component\Process\Process;
 
-class RunAeroInstall
+class RunAeroInstall extends InstallStep
 {
-    protected $command;
-
-    protected $name;
-
-    /**
-     * Create a new installation helper instance.
-     *
-     * @param NewCommand $command
-     * @param  string $name
-     */
-    public function __construct(NewCommand $command, $name)
-    {
-        $this->name = $name;
-        $this->command = $command;
-    }
-
     /**
      * Run the installation helper.
      *
