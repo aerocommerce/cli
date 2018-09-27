@@ -33,8 +33,8 @@ class SwapThemeEnv extends InstallStep
 
             if (strpos($contents, 'AERO_THEME=') !== false) {
                 $contents = preg_replace(
-                    "/AERO_THEME=(.*)$/m",
-                    $this->command->theme,
+                    "/(^AERO_THEME=)(.*)$/m",
+                    "$1{$this->command->theme}",
                     $contents
                 );
             } else {
