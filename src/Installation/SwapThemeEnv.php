@@ -2,8 +2,8 @@
 
 namespace Aero\Cli\Installation;
 
-use Aero\Cli\InstallStep;
 use Aero\Cli\Command;
+use Aero\Cli\InstallStep;
 
 class SwapThemeEnv extends InstallStep
 {
@@ -33,7 +33,7 @@ class SwapThemeEnv extends InstallStep
 
             if (strpos($contents, 'AERO_THEME=') !== false) {
                 $contents = preg_replace(
-                    "/AERO_THEME=(.*)$/m",
+                    '/AERO_THEME=(.*)$/m',
                     $this->command->theme,
                     $contents
                 );
