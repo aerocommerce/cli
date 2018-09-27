@@ -2,8 +2,8 @@
 
 namespace Aero\Cli\Installation;
 
-use Aero\Cli\InstallStep;
 use Aero\Cli\Command;
+use Aero\Cli\InstallStep;
 use Symfony\Component\Process\Process;
 
 class CreateLaravelProject extends InstallStep
