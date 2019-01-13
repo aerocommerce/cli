@@ -19,7 +19,6 @@ class NewCommand extends Command
         Installation\UpdateComposerFile::class,
         Installation\ComposerUpdate::class,
         Installation\RemoveRoutes::class,
-        Installation\RunAeroInstall::class,
     ];
 
     /**
