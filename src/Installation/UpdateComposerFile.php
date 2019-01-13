@@ -38,7 +38,7 @@ class UpdateComposerFile extends InstallStep
     {
         return json_decode(file_get_contents(
             $this->command->path.'/composer.json'
-        ),true);
+        ), true);
     }
 
     /**

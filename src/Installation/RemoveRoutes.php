@@ -40,7 +40,7 @@ class RemoveRoutes extends InstallStep
     {
         $contents = file_get_contents($path);
 
-        $contents = preg_replace('/(^Route::.*\;)/ms', "", $contents);
+        $contents = preg_replace('/(^Route::.*\;)/ms', '', $contents);
 
         file_put_contents($path, $contents);
 
