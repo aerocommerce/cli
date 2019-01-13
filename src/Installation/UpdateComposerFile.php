@@ -3,7 +3,6 @@
 namespace Aero\Cli\Installation;
 
 use Aero\Cli\InstallStep;
-use Symfony\Component\Console\Question\Question;
 
 class UpdateComposerFile extends InstallStep
 {
@@ -13,23 +12,7 @@ class UpdateComposerFile extends InstallStep
      * @var array
      */
     protected $dependencies = [
-        'aerocommerce/framework' => 'dev-master',
-    ];
-
-    /**
-     * The development dependencies required.
-     *
-     * @var array
-     */
-    protected $internalDependencies = [];
-
-    /**
-     * The internal repository mapping when developing internally.
-     *
-     * @var array
-     */
-    protected $repositories = [
-        'aerocommerce/framework' => 'framework',
+        'aerocommerce/core' => 'dev-master',
     ];
 
     /**
@@ -41,11 +24,7 @@ class UpdateComposerFile extends InstallStep
     {
         $composer = $this->getComposerConfiguration();
 
-        $composer = $this->addDependencies($composer);
-
-        if ($this->command->input->getOption('internal')) {
-            $composer = $this->addInternalRepositories($this->addInternalDependencies($composer));
-        }
+        $composer = $this->addRepository($this->addDependencies($composer));
 
         $this->writeComposerFile($composer);
     }
@@ -57,7 +36,9 @@ class UpdateComposerFile extends InstallStep
      */
     protected function getComposerConfiguration()
     {
-        return json_decode(file_get_contents($this->command->path.'/composer.json'), true);
+        return json_decode(file_get_contents(
+            $this->command->path.'/composer.json'
+        ),true);
     }
 
     /**
@@ -76,77 +57,20 @@ class UpdateComposerFile extends InstallStep
     }
 
     /**
-     * Add the Composer dependencies required for an Aero Commerce Store when developing internally.
+     * Add the Aero Commerce package repository to the Composer array.
      *
-     * @param  array $composer
+     * @param  array  $composer
      * @return array
      */
-    protected function addInternalDependencies($composer)
+    protected function addRepository($composer)
     {
-        foreach ($this->internalDependencies as $dependency => $version) {
-            $composer['require-dev'][$dependency] = $version;
+        if (! isset($composer['repositories'])) {
+            $composer['repositories'] = [];
         }
-
-        return $composer;
-    }
-
-    /**
-     * Add the internal repositories to the Composer array.
-     *
-     * @param  array $composer
-     * @return array
-     */
-    protected function addInternalRepositories($composer)
-    {
-        foreach ($this->repositories as $repository => $path) {
-            $composer = $this->addInternalRepository($composer, $repository, $path);
-        }
-
-        return $composer;
-    }
-
-    /**
-     * Add an internal repository to the Composer array.
-     *
-     * @param $composer
-     * @param $repository
-     * @param $path
-     * @return mixed
-     */
-    protected function addInternalRepository($composer, $repository, $path)
-    {
-        $helper = $this->command->getHelper('question');
-
-        $default = realpath($this->command->path."/../{$path}");
-
-        $text = "Please enter the path to {$repository}";
-
-        if (is_dir($default)) {
-            $text .= " [{$default}]";
-        } else {
-            $default = null;
-        }
-
-        $question = new Question($text.': ', $default);
-        $question->setValidator(function ($answer) {
-            $answer = expand_tilde($answer);
-
-            if (! is_dir($answer)) {
-                throw new \RuntimeException('The path does not exist.');
-            }
-
-            return $answer;
-        });
-
-        $path = $this->command->path.'/aero/repositories/'.$path;
-
-        symlink($helper->ask($this->command->input, $this->command->output, $question), $path);
-
-        $composer['require'][$repository] = '*';
 
         $composer['repositories'][] = [
-            'type' => 'path',
-            'url' => $path,
+            'type' => 'composer',
+            'url' => 'http://packages.aerocommerce.com',
         ];
 
         return $composer;
@@ -160,6 +84,9 @@ class UpdateComposerFile extends InstallStep
      */
     protected function writeComposerFile($composer)
     {
-        file_put_contents($this->command->path.'/composer.json', json_encode($composer, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+        file_put_contents(
+            $this->command->path.'/composer.json',
+            json_encode($composer, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)
+        );
     }
 }

@@ -40,11 +40,7 @@ class RemoveRoutes extends InstallStep
     {
         $contents = file_get_contents($path);
 
-        $contents = preg_replace(
-            '/(^Route::.*\;)/ms',
-            "// To enable custom routes for your application, enable App\Providers\RouteServiceProvider in config/app.php",
-            $contents
-        );
+        $contents = preg_replace('/(^Route::.*\;)/ms', "", $contents);
 
         file_put_contents($path, $contents);
 

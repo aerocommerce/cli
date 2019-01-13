@@ -103,6 +103,6 @@ abstract class Command extends SymfonyCommand
             return $key == 'require';
         })->flatMap(function ($value) {
             return get_object_vars($value);
-        })->has('aerocommerce/framework');
+        })->has('aerocommerce/core');
     }
 }

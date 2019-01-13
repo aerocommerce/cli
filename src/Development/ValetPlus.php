@@ -52,7 +52,7 @@ class ValetPlus
         $this->command->output->writeln('<info>Valet Plus was not detected on your system and is the recommended development environment for Aero Commerce.</info>');
 
         $helper = $this->command->getHelper('question');
-        $question = new ConfirmationQuestion('Install Valet Plus? (Y/N)', false);
+        $question = new ConfirmationQuestion('Install Valet Plus? [Y/n]');
 
         if ($helper->ask($this->command->input, $this->command->output, $question)) {
             $this->removeLaravelValet();

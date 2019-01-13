@@ -16,14 +16,10 @@ class NewCommand extends Command
      */
     protected $installers = [
         Installation\CreateLaravelProject::class,
-        Installation\AeroStructure::class,
         Installation\UpdateComposerFile::class,
         Installation\ComposerUpdate::class,
-        Installation\InstallProviders::class,
-        Installation\RemoveProviders::class,
         Installation\RemoveRoutes::class,
-        Installation\SwapRequestClass::class,
-        // Installation\RunAeroInstall::class,
+        Installation\RunAeroInstall::class,
     ];
 
     /**
@@ -34,8 +30,7 @@ class NewCommand extends Command
     protected function configure()
     {
         $this->setName('new')
-            ->setDescription('Create a new Aero Commerce application.')
-            ->addOption('internal', InputArgument::OPTIONAL)
+            ->setDescription('Create a new Aero Commerce application')
             ->addArgument('name', InputArgument::REQUIRED);
     }
 

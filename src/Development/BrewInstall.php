@@ -39,7 +39,7 @@ class BrewInstall
             $this->command->output->writeln('<info>Brew is required for Valet Plus</info>');
 
             $helper = $this->command->getHelper('question');
-            $question = new ConfirmationQuestion('Install Brew? (Y/N)', false);
+            $question = new ConfirmationQuestion('Install Brew? [Y\n]');
 
             if ($helper->ask($this->command->input, $this->command->output, $question)) {
                 $process = new Process('/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"');

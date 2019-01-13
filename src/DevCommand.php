@@ -16,7 +16,6 @@ class DevCommand extends SymfonyCommand
         Development\InstallPHP::class,
         Development\ValetPlus::class,
         Development\InstallElasticSearch::class,
-        Development\CreateProject::class,
     ];
 
     /**
@@ -26,7 +25,8 @@ class DevCommand extends SymfonyCommand
      */
     protected function configure()
     {
-        $this->setName('dev')->setDescription('Create a new Aero Commerce application.');
+        $this->setName('dev')
+            ->setDescription('Sets up a development environment to install an Aero Commerce application');
     }
 
     /**
@@ -50,7 +50,12 @@ class DevCommand extends SymfonyCommand
         }
     }
 
-    private function getInstallers()
+    /**
+     * The installer steps for this command.
+     *
+     * @return array
+     */
+    protected function getInstallers()
     {
         return $this->installers;
     }
