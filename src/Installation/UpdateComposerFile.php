@@ -70,7 +70,7 @@ class UpdateComposerFile extends InstallStep
 
         $composer['repositories'][] = [
             'type' => 'composer',
-            'url' => 'http://packages.aerocommerce.com',
+            'url' => 'https://packages.aerocommerce.com',
         ];
 
         return $composer;
