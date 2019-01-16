@@ -2,8 +2,6 @@
 
 namespace Aero\Cli;
 
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 
 abstract class Command extends SymfonyCommand
@@ -11,14 +9,14 @@ abstract class Command extends SymfonyCommand
     /**
      * The input interface.
      *
-     * @var InputInterface
+     * @var \Symfony\Component\Console\Input\InputInterface
      */
     public $input;
 
     /**
      * The output interface.
      *
-     * @var OutputInterface
+     * @var \Symfony\Component\Console\Output\OutputInterface
      */
     public $output;
 

@@ -5,6 +5,8 @@ namespace Aero\Cli;
 abstract class InstallStep implements InstallationStepInterface
 {
     /**
+     * The command instance.
+     *
      * @var \Aero\Cli\Command
      */
     protected $command;
@@ -17,5 +19,16 @@ abstract class InstallStep implements InstallationStepInterface
     public function __construct(Command $command)
     {
         $this->command = $command;
+    }
+
+    /**
+     * Error the install.
+     *
+     * @param null|string $message
+     */
+    protected function errorInstall($message = null)
+    {
+        $this->command->output->error($message ?: 'Installation Failed');
+        die(0);
     }
 }
