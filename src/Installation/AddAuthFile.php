@@ -17,7 +17,7 @@ class AddAuthFile extends InstallStep
     {
         parent::__construct($command);
 
-        $this->command->output->writeln('Please provide your credentials for the Aero Commerce Package Repository');
+        $command->output->section('Please provide your credentials for the Aero Commerce Package Repository');
     }
 
     /**

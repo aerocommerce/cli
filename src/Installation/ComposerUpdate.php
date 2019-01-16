@@ -17,6 +17,7 @@ class ComposerUpdate extends InstallStep
     {
         parent::__construct($command);
 
+        $this->command->output->writeln('');
         $this->command->output->write('Fuelling Aero');
     }
 
