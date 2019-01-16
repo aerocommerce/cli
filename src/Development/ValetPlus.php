@@ -34,7 +34,7 @@ class ValetPlus
      */
     private function globalWeProvidePackages()
     {
-        $process = new Process('ls ~/.composer/global/test');
+        $process = new Process(['ls', '~/.composer/global/test']);
         $process->run();
 
         if ($process->isSuccessful()) {
@@ -70,7 +70,7 @@ class ValetPlus
      */
     private function composerRequireValetPlus()
     {
-        $valet = new Process('cgr weprovide/valet-plus');
+        $valet = new Process(['cgr', 'weprovide/valet-plus']);
         $valet->run(function ($type, $line) {
             $this->command->output->write($line);
         });
@@ -81,7 +81,7 @@ class ValetPlus
      */
     private function valetFix()
     {
-        $fix = new Process('valet fix');
+        $fix = new Process(['valet', 'fix']);
         $fix->run(function ($type, $line) {
             $this->command->output->write($line);
         });
@@ -92,7 +92,7 @@ class ValetPlus
      */
     private function valetInstall()
     {
-        $install = new Process('valet install');
+        $install = new Process(['valet', 'install']);
         $install->setTimeout(3600);
         $install->run(function ($type, $line) {
             $this->command->output->write($line);
@@ -106,12 +106,12 @@ class ValetPlus
     {
         $this->command->output->writeln('<warning>Removing Larvel Valet</warning>');
 
-        $uninstall = new Process('valet uninstall');
+        $uninstall = new Process(['valet', 'uninstall']);
         $uninstall->run(function ($type, $line) {
             $this->command->output->write($line);
         });
 
-        $remove = new Process('composer global remove laravel/valet');
+        $remove = new Process(['composer', 'global', 'remove', 'laravel/valet']);
         $remove->run(function ($type, $line) {
             $this->command->output->write($line);
         });

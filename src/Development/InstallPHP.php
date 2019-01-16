@@ -16,7 +16,7 @@ class InstallPHP
     {
         $this->command->output->writeln('<info>Installing PHP 7.2</info>');
 
-        $php = new Process('brew install php@7.2');
+        $php = new Process(['brew', 'install', 'php@7.2']);
 
         $php->run(function ($type, $line) {
             $this->command->output->write($line);

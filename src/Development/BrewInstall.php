@@ -27,7 +27,7 @@ class BrewInstall
      */
     private function brewDoesNotExist()
     {
-        $process = new Process('which brew');
+        $process = new Process(['which', 'brew']);
         $process->run();
 
         return $process->getOutput() == '';

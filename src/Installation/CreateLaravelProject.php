@@ -27,7 +27,7 @@ class CreateLaravelProject extends InstallStep
      */
     public function install()
     {
-        $process = new Process('laravel new '.$this->command->project.' --quiet');
+        $process = new Process(['laravel', 'new', $this->command->project, '--quiet']);
 
         if ('\\' !== DIRECTORY_SEPARATOR && file_exists('/dev/tty') && is_readable('/dev/tty')) {
             $process->setTty(true);

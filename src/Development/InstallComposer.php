@@ -18,7 +18,7 @@ class InstallComposer
     {
         $this->command->output->writeln('<info>Installing Composer</info>');
         if ($this->composerDoestNotExist()) {
-            $composer = new Process('brew install composer');
+            $composer = new Process(['brew', 'install', 'composer']);
             $composer->run(function ($type, $line) {
                 $this->command->output->write($line);
             });
@@ -30,7 +30,7 @@ class InstallComposer
      */
     private function composerDoestNotExist()
     {
-        $process = new Process('which composer');
+        $process = new Process(['which', 'composer']);
         $process->run();
 
         return $process->getOutput() == '';
