@@ -17,6 +17,7 @@ class NewCommand extends Command
     protected $installers = [
         Installation\CreateLaravelProject::class,
         Installation\UpdateComposerFile::class,
+        Installation\AddAuthFile::class,
         Installation\ComposerUpdate::class,
         Installation\RemoveRoutes::class,
     ];
@@ -54,6 +55,10 @@ class NewCommand extends Command
         foreach ($installers as $installer) {
             (new $installer($this))->install();
         }
+
+        $this->output->writeln('');
+        $this->output->writeln('<info>✔ Installation successful</info>');
+        $this->output->writeln("Configure your environment (.env) file and run <comment>cd {$this->project} && php artisan aero:install</comment>");
     }
 
     /**

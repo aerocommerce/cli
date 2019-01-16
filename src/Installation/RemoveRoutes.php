@@ -29,6 +29,8 @@ class RemoveRoutes extends InstallStep
         $this->removeWebRoutes();
 
         $this->removeApiRoutes();
+
+        $this->command->output->writeln(': <info>✔</info>');
     }
 
     /**
@@ -43,8 +45,6 @@ class RemoveRoutes extends InstallStep
         $contents = preg_replace('/(^Route::.*\;)/ms', '', $contents);
 
         file_put_contents($path, $contents);
-
-        $this->command->output->writeln(': <info>✔</info>');
     }
 
     /**

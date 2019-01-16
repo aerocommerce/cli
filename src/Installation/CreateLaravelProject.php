@@ -37,6 +37,11 @@ class CreateLaravelProject extends InstallStep
             $this->command->output->write($line);
         });
 
+        if (! $process->isSuccessful()) {
+            $this->command->output->writeln(': <error>✘</error>');
+            die(0);
+        }
+
         $this->command->output->writeln(': <info>✔</info>');
     }
 }
