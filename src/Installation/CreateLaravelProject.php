@@ -17,6 +17,7 @@ class CreateLaravelProject extends InstallStep
     {
         parent::__construct($command);
 
+        $this->command->output->writeln('');
         $this->command->output->write('Installing Laravel');
     }
 
