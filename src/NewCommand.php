@@ -57,7 +57,7 @@ class NewCommand extends Command
         }
 
         $this->output->writeln('');
-        $this->output->success('Installation successful');
+        $this->output->success('Installation Successful');
         $this->output->writeln("Configure your environment (.env) file and run <comment>cd {$this->project} && php artisan aero:install</comment>");
         $this->output->writeln('');
     }
