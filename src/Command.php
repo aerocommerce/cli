@@ -16,7 +16,7 @@ abstract class Command extends SymfonyCommand
     /**
      * The output interface.
      *
-     * @var \Symfony\Component\Console\Output\OutputInterface
+     * @var \Symfony\Component\Console\Style\SymfonyStyle
      */
     public $output;
 
