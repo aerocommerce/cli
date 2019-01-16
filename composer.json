@@ -29,11 +29,6 @@
     "ext-json": "^1.5",
     "ext-posix": "^7.1"
   },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0-dev"
-    }
-  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "bin": [
