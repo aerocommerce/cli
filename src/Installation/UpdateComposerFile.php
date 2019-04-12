@@ -13,6 +13,7 @@ class UpdateComposerFile extends InstallStep
      */
     protected $dependencies = [
         'aerocommerce/core' => 'dev-master',
+        'aerocommerce/checkout' => 'dev-master',
         'aerocommerce/default-theme' => 'dev-master',
     ];
 
