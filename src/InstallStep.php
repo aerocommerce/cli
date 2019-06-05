@@ -43,6 +43,7 @@ abstract class InstallStep implements InstallationStepInterface
         if (file_exists($composerPath)) {
             return '"'.PHP_BINARY.'" '.$composerPath;
         }
+
         return 'composer';
     }
 }
