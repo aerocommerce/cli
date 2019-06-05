@@ -18,7 +18,6 @@ class CreateLaravelProject extends InstallStep
         parent::__construct($command);
 
         $this->command->output->writeln('');
-        $this->command->output->write('Installing Laravel');
     }
 
     /**
@@ -28,7 +27,15 @@ class CreateLaravelProject extends InstallStep
      */
     public function install()
     {
-        $process = new Process(['laravel', 'new', $this->command->project, '--quiet']);
+        $this->command->output->write('Downloading Laravel');
+
+        $process = new Process([
+            $this->findComposer(),
+            'create-project',
+            'laravel/laravel="5.8.*"',
+            $this->command->project,
+            '--quiet',
+        ]);
 
         if ('\\' !== DIRECTORY_SEPARATOR && file_exists('/dev/tty') && is_readable('/dev/tty')) {
             $process->setTty(true);
@@ -43,5 +50,24 @@ class CreateLaravelProject extends InstallStep
         }
 
         $this->command->output->writeln(': <info>✔</info>');
+
+        $composer = $this->findComposer();
+
+        $commands = [
+            $composer.' install --no-scripts',
+            $composer.' run-script post-root-package-install --quiet',
+            $composer.' run-script post-create-project-cmd --quiet',
+            $composer.' run-script post-autoload-dump --quiet',
+        ];
+
+        $process = new Process([implode(' && ', $commands)]);
+
+        if ('\\' !== DIRECTORY_SEPARATOR && file_exists('/dev/tty') && is_readable('/dev/tty')) {
+            $process->setTty(true);
+        }
+
+        $process->run(function ($type, $line) {
+            $this->command->output->write($line);
+        });
     }
 }

@@ -31,4 +31,18 @@ abstract class InstallStep implements InstallationStepInterface
         $this->command->output->error($message ?: 'Installation Failed');
         die(0);
     }
+
+    /**
+     * Get the composer command for the environment.
+     *
+     * @return string
+     */
+    protected function findComposer()
+    {
+        $composerPath = getcwd().'/composer.phar';
+        if (file_exists($composerPath)) {
+            return '"'.PHP_BINARY.'" '.$composerPath;
+        }
+        return 'composer';
+    }
 }
