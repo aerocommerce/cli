@@ -32,7 +32,7 @@ class CreateLaravelProject extends InstallStep
         $process = new Process([
             $this->findComposer(),
             'create-project',
-            'laravel/laravel="5.8.*"',
+            'laravel/laravel=5.8',
             $this->command->project,
             '--quiet',
         ]);
