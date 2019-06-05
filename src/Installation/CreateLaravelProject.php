@@ -60,7 +60,7 @@ class CreateLaravelProject extends InstallStep
             $composer.' run-script post-autoload-dump --quiet',
         ];
 
-        $process = new Process([implode(' && ', $commands)]);
+        $process = new Process(implode(' && ', $commands), $this->command->path, null, null, null);
 
         if ('\\' !== DIRECTORY_SEPARATOR && file_exists('/dev/tty') && is_readable('/dev/tty')) {
             $process->setTty(true);
