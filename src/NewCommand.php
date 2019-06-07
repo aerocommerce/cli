@@ -54,7 +54,7 @@ class NewCommand extends Command
 
         foreach ($installers as $installer) {
             (new $installer($this))->install();
-        };
+        }
     }
 
     /**
