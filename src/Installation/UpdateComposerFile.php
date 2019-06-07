@@ -12,9 +12,21 @@ class UpdateComposerFile extends InstallStep
      * @var array
      */
     protected $dependencies = [
+        'aerocommerce/admin' => 'dev-master',
         'aerocommerce/core' => 'dev-master',
         'aerocommerce/checkout' => '^1.0.0',
         'aerocommerce/default-theme' => '^1.0.0',
+    ];
+
+    /**
+     * The scripts to run.
+     *
+     * @var array
+     */
+    protected $scripts = [
+        'post-autoload-dump' => [
+            '@php artisan aero:update --ansi',
+        ],
     ];
 
     /**
@@ -27,6 +39,8 @@ class UpdateComposerFile extends InstallStep
         $composer = $this->getComposerConfiguration();
 
         $composer = $this->addRepository($this->addDependencies($composer));
+
+        $composer = $this->addScripts($composer);
 
         $this->writeComposerFile($composer);
     }
@@ -74,6 +88,31 @@ class UpdateComposerFile extends InstallStep
             'type' => 'composer',
             'url' => 'https://packages.aerocommerce.com',
         ];
+
+        return $composer;
+    }
+
+    /**
+     * Add scripts for an Aero Commerce Store.
+     *
+     * @param  array $composer
+     * @return array
+     */
+    protected function addScripts($composer)
+    {
+        if (! isset($composer['scripts'])) {
+            $composer['scripts'] = [];
+        }
+
+        foreach ($this->scripts as $area => $scripts) {
+            if (! isset($composer['scripts'][$area])) {
+                $composer['scripts'][$area] = [];
+            }
+
+            foreach ($scripts as $script) {
+                $composer['scripts'][$area][] = $script;
+            }
+        }
 
         return $composer;
     }
