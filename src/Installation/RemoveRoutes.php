@@ -2,23 +2,10 @@
 
 namespace Aero\Cli\Installation;
 
-use Aero\Cli\Command;
 use Aero\Cli\InstallStep;
 
 class RemoveRoutes extends InstallStep
 {
-    /**
-     * Create a new installation helper instance.
-     *
-     * @param \Aero\Cli\Command $command
-     */
-    public function __construct(Command $command)
-    {
-        parent::__construct($command);
-
-        $this->command->output->write('Removing Default Routes');
-    }
-
     /**
      * Remove the default application routes that will conflict with Aero Commerce.
      *
@@ -26,11 +13,13 @@ class RemoveRoutes extends InstallStep
      */
     public function install()
     {
+        $this->command->output->write('Removing default routes...');
+
         $this->removeWebRoutes();
 
         $this->removeApiRoutes();
 
-        $this->command->output->writeln(': <info>✔</info>');
+        $this->command->output->writeln(' <info>✔</info>');
     }
 
     /**

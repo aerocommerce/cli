@@ -15,7 +15,7 @@ class CreateProject extends InstallStep
     public function install()
     {
         $this->command->output->writeln('');
-        $this->command->output->write('Creating base application');
+        $this->command->output->write('Crafting application...');
 
         $process = new Process([
             $this->findComposer(),
@@ -37,6 +37,6 @@ class CreateProject extends InstallStep
             $this->errorInstall();
         }
 
-        $this->command->output->writeln(': <info>✔</info>');
+        $this->command->output->writeln(' <info>✔</info>');
     }
 }
