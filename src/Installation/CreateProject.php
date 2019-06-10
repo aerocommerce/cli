@@ -14,8 +14,7 @@ class CreateProject extends InstallStep
      */
     public function install()
     {
-        $this->command->output->writeln('');
-        $this->command->output->write('Crafting application...');
+        $this->command->output->write('Downloading base project...');
 
         $process = new Process([
             $this->findComposer(),

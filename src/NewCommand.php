@@ -50,6 +50,8 @@ class NewCommand extends Command
 
         $this->verifyApplicationDoesntExist($this->path);
 
+        $this->output->title('Creating a new Aero Commerce store');
+
         $installers = $this->getInstallers();
 
         foreach ($installers as $installer) {

@@ -29,6 +29,8 @@ class AddAuthFile extends InstallStep
     {
         $auth = $this->promptForCredentials();
 
+        $this->command->output->newLine();
+
         $this->writeAuthFile($auth);
     }
 
@@ -39,18 +41,14 @@ class AddAuthFile extends InstallStep
      */
     protected function promptForCredentials()
     {
-        $helper = $this->command->getHelper('question');
-
-        $username = new Question('Username: ');
-        $password = new Question('Password: ');
-        $password->setHidden(true);
-        $password->setHiddenFallback(false);
+        $password = new Question('Password');
+        $password->setHidden(true)->setHiddenFallback(false);
 
         return [
             'http-basic' => [
                 'packages.aerocommerce.com' => [
-                    'username' => $helper->ask($this->command->input, $this->command->output, $username),
-                    'password' => $helper->ask($this->command->input, $this->command->output, $password),
+                    'username' => $this->command->output->askQuestion(new Question('Username')),
+                    'password' => $this->command->output->askQuestion($password),
                 ],
             ],
         ];
