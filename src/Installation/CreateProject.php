@@ -22,6 +22,8 @@ class CreateProject extends InstallStep
             'laravel/laravel=5.8',
             $this->command->project,
             '--quiet',
+            '--no-scripts',
+            '--no-install',
         ]);
 
         if ('\\' !== DIRECTORY_SEPARATOR && file_exists('/dev/tty') && is_readable('/dev/tty')) {

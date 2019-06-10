@@ -16,10 +16,10 @@ class NewCommand extends Command
      */
     protected $installers = [
         Installation\CreateProject::class,
+        Installation\RemoveRoutes::class,
         Installation\UpdateComposerFile::class,
         Installation\AddAuthFile::class,
         Installation\RunComposerScripts::class,
-        Installation\RemoveRoutes::class,
     ];
 
     /**
