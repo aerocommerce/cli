@@ -25,7 +25,7 @@ class UpdateComposerFile extends InstallStep
      */
     protected $scripts = [
         'post-autoload-dump' => [
-            '@php artisan aero:update --ansi',
+            '@php artisan aero:link --ansi',
         ],
     ];
 
