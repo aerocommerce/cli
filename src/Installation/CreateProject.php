@@ -16,15 +16,11 @@ class CreateProject extends InstallStep
     {
         $this->command->output->write('Downloading base project...');
 
-        $process = new Process([
-            $this->findComposer(),
-            'create-project',
-            'laravel/laravel=5.8',
-            $this->command->project,
-            '--quiet',
-            '--no-scripts',
-            '--no-install',
-        ]);
+        $options = '--quiet --no-scripts --no-install';
+
+        $command = "{$this->findComposer()} create-project laravel/laravel=5.8 \"{$this->command->project}\" {$options}";
+
+        $process = new Process($command, null, null, null, null);
 
         if ('\\' !== DIRECTORY_SEPARATOR && file_exists('/dev/tty') && is_readable('/dev/tty')) {
             $process->setTty(true);

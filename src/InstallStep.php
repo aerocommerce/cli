@@ -40,6 +40,7 @@ abstract class InstallStep implements InstallationStepInterface
     protected function findComposer()
     {
         $composerPath = getcwd().'/composer.phar';
+
         if (file_exists($composerPath)) {
             return '"'.PHP_BINARY.'" '.$composerPath;
         }
