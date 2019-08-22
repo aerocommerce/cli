@@ -16,11 +16,13 @@ class RunComposerScripts extends InstallStep
     {
         $composer = $this->findComposer();
 
+        $noInteraction = ($this->command->option('no-interaction')) ? ' --no-interaction' : '';
+
         $commands = [
             $composer.' install --no-scripts --prefer-dist',
             $composer.' run-script post-root-package-install --quiet',
             $composer.' run-script post-create-project-cmd --quiet',
-            '"'.PHP_BINARY.'" artisan aero:configure --ansi',
+            '"'.PHP_BINARY.'" artisan aero:configure --ansi'.$noInteraction,
             '"'.PHP_BINARY.'" artisan aero:install --ansi',
             $composer.' run-script post-autoload-dump --quiet',
         ];
