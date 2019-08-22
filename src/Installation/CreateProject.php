@@ -24,7 +24,7 @@ class CreateProject extends InstallStep
 
         $process = new Process($command, null, null, null, null);
 
-        if ('\\' !== DIRECTORY_SEPARATOR && file_exists('/dev/tty') && is_readable('/dev/tty')) {
+        if ('\\' !== DIRECTORY_SEPARATOR && posix_isatty(STDIN)) {
             $process->setTty(true);
         }
 
