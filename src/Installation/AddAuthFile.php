@@ -81,6 +81,7 @@ class AddAuthFile extends InstallStep
         }
 
         $this->command->output->writeln(' <fg=red>✘</>');
+
         return false;
     }
 
