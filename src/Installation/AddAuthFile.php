@@ -25,7 +25,7 @@ class AddAuthFile extends InstallStep
      */
     public function install()
     {
-        if (!$auth = $this->getCredentialsFromEnv()) {
+        if (! $auth = $this->getCredentialsFromEnv()) {
             $auth = $this->promptForCredentials();
         }
 
@@ -57,7 +57,7 @@ class AddAuthFile extends InstallStep
     }
 
     /**
-     * Get the repository credentials from environment variables if possible
+     * Get the repository credentials from environment variables if possible.
      *
      * @return array|bool
      */
