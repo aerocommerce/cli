@@ -25,7 +25,7 @@ class CreateProject extends InstallStep
         $process = new Process($command, null, null, null, null);
 
         if ('\\' !== DIRECTORY_SEPARATOR && posix_isatty(STDIN)) {
-            $process->setTty(false);
+            $process->setTty(true);
         }
 
         $process->setTimeout(null)->run(function ($type, $line) {
