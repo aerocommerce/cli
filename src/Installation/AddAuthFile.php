@@ -16,8 +16,6 @@ class AddAuthFile extends InstallStep
     public function __construct(Command $command)
     {
         parent::__construct($command);
-
-        $command->output->section('Please provide your credentials for the Aero Commerce Package Repository');
     }
 
     /**
@@ -27,7 +25,9 @@ class AddAuthFile extends InstallStep
      */
     public function install()
     {
-        $auth = $this->promptForCredentials();
+        if (! $auth = $this->getCredentialsFromEnv()) {
+            $auth = $this->promptForCredentials();
+        }
 
         $this->command->output->newLine();
 
@@ -41,6 +41,8 @@ class AddAuthFile extends InstallStep
      */
     protected function promptForCredentials()
     {
+        $this->command->output->section('Please provide your credentials for the Aero Commerce Package Repository');
+
         $password = new Question('Password');
         $password->setHidden(true)->setHiddenFallback(false);
 
@@ -52,6 +54,35 @@ class AddAuthFile extends InstallStep
                 ],
             ],
         ];
+    }
+
+    /**
+     * Get the repository credentials from environment variables if possible.
+     *
+     * @return array|bool
+     */
+    protected function getCredentialsFromEnv()
+    {
+        $this->command->output->write('Getting Aero Commerce Package Repository credentials from env...');
+        $username = getenv('PACKAGE_REPOSITORY_USERNAME');
+        $password = getenv('PACKAGE_REPOSITORY_PASSWORD');
+
+        if ($username && $password) {
+            $this->command->output->writeln(' <info>✔</info>');
+
+            return [
+                'http-basic' => [
+                    'packages.aerocommerce.com' => [
+                        'username' => $username,
+                        'password' => $password,
+                    ],
+                ],
+            ];
+        }
+
+        $this->command->output->writeln(' <fg=red>✘</>');
+
+        return false;
     }
 
     /**
