@@ -16,7 +16,7 @@ class RunComposerScripts extends InstallStep
     {
         $composer = $this->findComposer();
 
-        $noInteraction = ($this->command->input->getOption('no-interaction')) ? ' --no-interaction' : '';
+        $noInteraction = $this->command->input->getOption('no-interaction') ? ' --no-interaction' : '';
 
         $commands = [
             $composer.' install --no-scripts --prefer-dist',
