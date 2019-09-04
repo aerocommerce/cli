@@ -15,6 +15,8 @@ Once installed, you should be able to run `aero {command}` from within any direc
 
 ## Installing Aero Commerce
 
+### Generating a New Site
+
 Use the `new` command to create a new Aero Commerce site:
 
 ```
@@ -22,3 +24,26 @@ aero new my-site
 ```
 
 This will download the latest version and install it into the `my-site` directory.
+
+### Configuring Your Site
+
+Run the configure command in your new site:
+
+```bash
+cd my-site
+php artisan aero:configure
+```
+
+and answer the questions.
+
+Alternatively you can manually set parameters in the generated `.env` file.
+
+### Finilasing installation
+
+Finally run:
+
+```bash
+php artisan aero:install
+```
+
+to run database migrations etc.
