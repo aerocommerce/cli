@@ -14,7 +14,7 @@ class RunComposerScripts extends InstallStep
      */
     public function install()
     {
-        mkdir($this->command->path.'/public/vendor/aerocommerce/', 755, true);
+        mkdir($this->command->path.'/public/vendor/aerocommerce/', 0755, true);
 
         $composer = $this->findComposer();
 
