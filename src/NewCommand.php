@@ -5,6 +5,7 @@ namespace Aero\Cli;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class NewCommand extends Command
@@ -31,7 +32,8 @@ class NewCommand extends Command
     {
         $this->setName('new')
             ->setDescription('Create a new Aero Commerce application')
-            ->addArgument('name', InputArgument::REQUIRED);
+            ->addArgument('name', InputArgument::REQUIRED)
+            ->addOption('docker', null, InputOption::VALUE_NONE, 'Install docker as part of the new site process');
     }
 
     /**
@@ -53,6 +55,10 @@ class NewCommand extends Command
         $this->output->title('Creating a new Aero Commerce store');
 
         $installers = $this->getInstallers();
+
+        if ($this->input->getOption('docker')) {
+            array_push($installers, Installation\AddDocker::class);
+        }
 
         foreach ($installers as $installer) {
             (new $installer($this))->install();
