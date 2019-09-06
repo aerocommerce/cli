@@ -33,7 +33,7 @@ class NewCommand extends Command
         $this->setName('new')
             ->setDescription('Create a new Aero Commerce application')
             ->addArgument('name', InputArgument::REQUIRED)
-            ->addOption('docker', null, InputOption::VALUE_NONE, 'Install docker as part of the new site process');
+            ->addOption('docker', null, InputOption::VALUE_NONE, 'Install the docker environment as part of the new site process');
     }
 
     /**
