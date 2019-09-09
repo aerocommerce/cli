@@ -19,7 +19,7 @@ class AddDocker extends InstallStep
         $composer = $this->findComposer();
 
         $commands = [
-            "{$composer} require aerocommerce/docker-environment",
+            "{$composer} require aerocommerce/docker-environment --prefer-dist",
             '"'.PHP_BINARY.'" artisan vendor:publish --provider="Aero\DockerEnvironmentServiceProvider"',
         ];
 
