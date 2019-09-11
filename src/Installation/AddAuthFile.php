@@ -95,7 +95,7 @@ class AddAuthFile extends InstallStep
 
     /**
      * Check the credentials are correct.
-     * 
+     *
      * @return bool
      */
     protected function checkCredentials()
