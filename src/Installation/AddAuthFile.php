@@ -4,8 +4,8 @@ namespace Aero\Cli\Installation;
 
 use Aero\Cli\Command;
 use Aero\Cli\InstallStep;
-use Symfony\Component\Console\Question\Question;
 use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Component\Console\Question\Question;
 
 class AddAuthFile extends InstallStep
 {
@@ -94,7 +94,7 @@ class AddAuthFile extends InstallStep
     }
 
     /**
-     * Check the credentials are correct
+     * Check the credentials are correct.
      * 
      * @return bool
      */
@@ -103,7 +103,7 @@ class AddAuthFile extends InstallStep
         $this->command->output->write('Checking credentials...');
 
         $client = HttpClient::create([
-            'auth_basic' => [$this->username, $this->password]
+            'auth_basic' => [$this->username, $this->password],
         ]);
         $response = $client->request('GET', 'https://packages.aerocommerce.com/check');
 
