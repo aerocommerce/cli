@@ -25,7 +25,6 @@
     "illuminate/support": "~5.1|~5.2|~5.3|~5.4|~5.5|~5.6|~5.7|~5.8",
     "symfony/console": "~2.7|~3.0|~4.0",
     "symfony/process": "~2.7|~3.0|~4.0",
-    "guzzlehttp/guzzle": "~6.0",
     "ext-json": "^1.5",
     "ext-posix": "^7.1",
     "symfony/http-client": "^4.3"
