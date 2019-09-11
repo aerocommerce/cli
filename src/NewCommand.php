@@ -3,8 +3,8 @@
 namespace Aero\Cli;
 
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -32,7 +32,7 @@ class NewCommand extends Command
     {
         $this->setName('new')
             ->setDescription('Create a new Aero Commerce application')
-            ->addArgument('name', InputArgument::REQUIRED)
+            ->addArgument('project')
             ->addOption('docker', null, InputOption::VALUE_NONE, 'Install the docker environment as part of the new site process');
     }
 
@@ -47,7 +47,7 @@ class NewCommand extends Command
     {
         $this->input = $input;
         $this->output = new SymfonyStyle($input, $output);
-        $this->project = $input->getArgument('name');
+        $this->project = $input->getArgument('project') ?? $this->output->askQuestion(new Question('Project directory (relative to current directory)'));
         $this->path = getcwd().'/'.$this->project;
 
         $this->verifyApplicationDoesntExist($this->path);

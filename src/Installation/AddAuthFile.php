@@ -4,10 +4,21 @@ namespace Aero\Cli\Installation;
 
 use Aero\Cli\Command;
 use Aero\Cli\InstallStep;
+use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\Console\Question\Question;
 
 class AddAuthFile extends InstallStep
 {
+    /**
+     * @var string
+     */
+    protected $username;
+
+    /**
+     * @var string
+     */
+    protected $password;
+
     /**
      * Create a new installation helper instance.
      *
@@ -25,13 +36,22 @@ class AddAuthFile extends InstallStep
      */
     public function install()
     {
-        if (! $auth = $this->getCredentialsFromEnv()) {
-            $auth = $this->promptForCredentials();
+        while (! $this->username || ! $this->password || ! $this->checkCredentials()) {
+            if (! $this->getCredentialsFromEnv()) {
+                $this->promptForCredentials();
+            }
         }
 
         $this->command->output->newLine();
 
-        $this->writeAuthFile($auth);
+        $this->writeAuthFile([
+            'http-basic' => [
+                'packages.aerocommerce.com' => [
+                    'username' => $this->username,
+                    'password' => $this->password,
+                ],
+            ],
+        ]);
     }
 
     /**
@@ -46,14 +66,8 @@ class AddAuthFile extends InstallStep
         $password = new Question('Password');
         $password->setHidden(true)->setHiddenFallback(false);
 
-        return [
-            'http-basic' => [
-                'packages.aerocommerce.com' => [
-                    'username' => $this->command->output->askQuestion(new Question('Username')),
-                    'password' => $this->command->output->askQuestion($password),
-                ],
-            ],
-        ];
+        $this->username = $this->command->output->askQuestion(new Question('Username'));
+        $this->password = $this->command->output->askQuestion($password);
     }
 
     /**
@@ -70,19 +84,36 @@ class AddAuthFile extends InstallStep
         if ($username && $password) {
             $this->command->output->writeln(' <info>✔</info>');
 
-            return [
-                'http-basic' => [
-                    'packages.aerocommerce.com' => [
-                        'username' => $username,
-                        'password' => $password,
-                    ],
-                ],
-            ];
+            $this->username = $username;
+            $this->password = $password;
         }
 
         $this->command->output->writeln(' <fg=red>✘</>');
 
         return false;
+    }
+
+    /**
+     * Check the credentials are correct.
+     *
+     * @return bool
+     */
+    protected function checkCredentials()
+    {
+        $this->command->output->write('Checking credentials...');
+
+        $client = HttpClient::create([
+            'auth_basic' => [$this->username, $this->password],
+        ]);
+        $response = $client->request('GET', 'https://packages.aerocommerce.com/check');
+
+        $statusCode = $response->getStatusCode();
+
+        $authorised = $statusCode == 200;
+
+        $this->command->output->writeln($authorised ? ' <info>✔</info>' : ' <fg=red>✘</>');
+
+        return $authorised;
     }
 
     /**
