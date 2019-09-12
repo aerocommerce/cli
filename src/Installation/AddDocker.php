@@ -24,6 +24,7 @@ class AddDocker extends InstallStep
         ];
 
         $process = new Process(implode(' && ', $commands), $this->command->path);
+        $process->setTimeout(null);
 
         if ('\\' !== DIRECTORY_SEPARATOR && posix_isatty(STDIN)) {
             $process->setTty(true);
