@@ -19,7 +19,7 @@ class RunComposerScripts extends InstallStep
         $composer = $this->findComposer();
 
         $commands = [
-            $composer.' install --no-scripts --prefer-dist',
+            $composer.' install --no-scripts --prefer-dist --no-suggest',
             $composer.' run-script post-root-package-install --quiet',
             $composer.' run-script post-create-project-cmd --quiet',
             $composer.' run-script post-autoload-dump --quiet',
