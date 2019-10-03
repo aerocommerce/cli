@@ -14,13 +14,13 @@ class AddDocker extends InstallStep
      */
     public function install()
     {
-        $this->command->output->write('Setting up Docker...');
+        $this->command->output->writeln('Setting up Docker...');
 
         $composer = $this->findComposer();
 
         $commands = [
             "{$composer} require aerocommerce/docker-environment --prefer-dist",
-            '"'.PHP_BINARY.'" artisan vendor:publish --provider="Aero\DockerEnvironmentServiceProvider"',
+            '"'.PHP_BINARY.'" artisan vendor:publish --provider="Aero\DockerEnvironment\ServiceProvider"',
         ];
 
         $process = new Process(implode(' && ', $commands), $this->command->path);
