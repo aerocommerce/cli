@@ -38,7 +38,7 @@ and answer the questions.
 
 Alternatively you can manually set parameters in the generated `.env` file.
 
-### Finilasing installation
+### Finalising installation
 
 Finally run:
 

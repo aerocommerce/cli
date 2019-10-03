@@ -20,7 +20,7 @@ class CreateProject extends InstallStep
 
         $project = escapeshellarg($this->command->project);
 
-        $command = "{$this->findComposer()} create-project laravel/laravel=5.8 {$project} {$options}";
+        $command = "{$this->findComposer()} create-project laravel/laravel=6.0 {$project} {$options}";
 
         $process = new Process($command, null, null, null, null);
 
