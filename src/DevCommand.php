@@ -2,10 +2,10 @@
 
 namespace Aero\Cli;
 
-use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command as SymfonyCommand;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class DevCommand extends SymfonyCommand
 {

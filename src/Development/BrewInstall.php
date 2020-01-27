@@ -3,8 +3,8 @@
 namespace Aero\Cli\Development;
 
 use Aero\Cli\DevCommand;
-use Symfony\Component\Process\Process;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
+use Symfony\Component\Process\Process;
 
 class BrewInstall
 {
