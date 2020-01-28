@@ -10,7 +10,7 @@ class RunComposerScripts extends InstallStep
     /**
      * Run the installation helper.
      *
-     * @return void
+     * @return int
      */
     public function install()
     {
