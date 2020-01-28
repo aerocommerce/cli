@@ -16,13 +16,15 @@ class CreateProject extends InstallStep
     {
         $this->command->output->write('Downloading base project...');
 
-        // $options = ['--quiet', '--no-scripts', '--no-install'];
-
-        // $project = escapeshellarg($this->command->project);
-
-        // $command = "{$this->findComposer()} create-project laravel/laravel=6.0 {$project} {$options}";
-
-        $command = [$this->findComposer(), 'create-project', 'laravel/laravel=6.0', $this->command->project, '--quiet', '--no-scripts', '--no-install'];
+        $command = [
+            $this->findComposer(),
+            'create-project',
+            'laravel/laravel=6.0',
+            $this->command->project,
+            '--quiet',
+            '--no-scripts',
+            '--no-install'
+        ];
 
         $process = new Process($command, null, null, null, null);
 
