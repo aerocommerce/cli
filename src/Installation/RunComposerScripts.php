@@ -10,7 +10,7 @@ class RunComposerScripts extends InstallStep
     /**
      * Run the installation helper.
      *
-     * @return void
+     * @return int
      */
     public function install()
     {
@@ -25,7 +25,7 @@ class RunComposerScripts extends InstallStep
             $composer.' run-script post-autoload-dump --quiet',
         ];
 
-        $process = new Process(implode(' && ', $commands), $this->command->path, null, null, null);
+        $process = Process::fromShellCommandline(implode(' && ', $commands), $this->command->path, null, null, null);
 
         if ('\\' !== DIRECTORY_SEPARATOR && posix_isatty(STDIN)) {
             $process->setTty(true);
@@ -34,5 +34,7 @@ class RunComposerScripts extends InstallStep
         $process->run(function ($type, $line) {
             $this->command->output->write($line);
         });
+
+        return 0;
     }
 }
