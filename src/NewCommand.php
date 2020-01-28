@@ -41,7 +41,7 @@ class NewCommand extends Command
      *
      * @param  InputInterface $input
      * @param  OutputInterface $output
-     * @return void
+     * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -63,6 +63,8 @@ class NewCommand extends Command
         foreach ($installers as $installer) {
             (new $installer($this))->install();
         }
+
+        return 0;
     }
 
     /**
