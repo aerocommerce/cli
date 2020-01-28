@@ -23,7 +23,7 @@ class CreateProject extends InstallStep
             $this->command->project,
             '--quiet',
             '--no-scripts',
-            '--no-install'
+            '--no-install',
         ];
 
         $process = new Process($command, null, null, null, null);
