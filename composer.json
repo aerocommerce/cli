@@ -19,9 +19,9 @@
     "ext-json": "*",
     "ext-posix": "*",
     "illuminate/support": "^6.0",
-    "symfony/console": "^5.0",
-    "symfony/process": "^5.0",
-    "symfony/http-client": "^5.0"
+    "symfony/console": "^4.2|^5.0",
+    "symfony/process": "^4.2|^5.0",
+    "symfony/http-client": "^4.2|^5.0"
   },
   "extra": {
     "branch-alias": {
