@@ -2,7 +2,6 @@
 
 namespace Aero\Cli\Installation;
 
-use Aero\Cli\Command;
 use Aero\Cli\InstallStep;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\HttpClient\HttpClient;
