@@ -20,16 +20,6 @@ class AddAuthFile extends InstallStep
     protected $password;
 
     /**
-     * Create a new installation helper instance.
-     *
-     * @param \Aero\Cli\Command $command
-     */
-    public function __construct(Command $command)
-    {
-        parent::__construct($command);
-    }
-
-    /**
      * Run the installation helper.
      *
      * @return void
@@ -57,9 +47,9 @@ class AddAuthFile extends InstallStep
     /**
      * Ask the user for the credentials for private repositories.
      *
-     * @return array
+     * @return void
      */
-    protected function promptForCredentials()
+    protected function promptForCredentials(): void
     {
         $this->command->output->section('Please provide your credentials for the Aero Commerce Package Repository');
 
@@ -73,22 +63,19 @@ class AddAuthFile extends InstallStep
     /**
      * Get the repository credentials from environment variables if possible.
      *
-     * @return array|bool
+     * @return bool
      */
-    protected function getCredentialsFromEnv()
+    protected function getCredentialsFromEnv(): bool
     {
-        $this->command->output->write('Getting Aero Commerce Package Repository credentials from env...');
         $username = getenv('PACKAGE_REPOSITORY_USERNAME');
         $password = getenv('PACKAGE_REPOSITORY_PASSWORD');
 
         if ($username && $password) {
-            $this->command->output->writeln(' <info>✔</info>');
-
             $this->username = $username;
             $this->password = $password;
-        }
 
-        $this->command->output->writeln(' <fg=red>✘</>');
+            return true;
+        }
 
         return false;
     }
@@ -98,7 +85,7 @@ class AddAuthFile extends InstallStep
      *
      * @return bool
      */
-    protected function checkCredentials()
+    protected function checkCredentials(): bool
     {
         $this->command->output->write('Checking credentials...');
 
@@ -109,7 +96,7 @@ class AddAuthFile extends InstallStep
 
         $statusCode = $response->getStatusCode();
 
-        $authorised = $statusCode == 200;
+        $authorised = $statusCode === 200;
 
         $this->command->output->writeln($authorised ? ' <info>✔</info>' : ' <fg=red>✘</>');
 
@@ -122,7 +109,7 @@ class AddAuthFile extends InstallStep
      * @param  array $auth
      * @return void
      */
-    protected function writeAuthFile($auth)
+    protected function writeAuthFile($auth): void
     {
         file_put_contents(
             $this->command->path.'/auth.json',

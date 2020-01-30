@@ -27,7 +27,7 @@ class RemoveRoutes extends InstallStep
      *
      * @param $path
      */
-    protected function updateFile($path)
+    protected function updateFile($path): void
     {
         $contents = file_get_contents($path);
 
@@ -39,7 +39,7 @@ class RemoveRoutes extends InstallStep
     /**
      * Remove the web routes.
      */
-    protected function removeWebRoutes()
+    protected function removeWebRoutes(): void
     {
         $path = $this->command->path.'/routes/web.php';
 
@@ -49,7 +49,7 @@ class RemoveRoutes extends InstallStep
     /**
      * Remove the API routes.
      */
-    protected function removeApiRoutes()
+    protected function removeApiRoutes(): void
     {
         $path = $this->command->path.'/routes/api.php';
 

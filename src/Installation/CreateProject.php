@@ -3,7 +3,6 @@
 namespace Aero\Cli\Installation;
 
 use Aero\Cli\InstallStep;
-use Symfony\Component\Process\Process;
 
 class CreateProject extends InstallStep
 {
@@ -26,19 +25,7 @@ class CreateProject extends InstallStep
             '--no-install',
         ];
 
-        $process = new Process($command, null, null, null, null);
-
-        if ('\\' !== DIRECTORY_SEPARATOR && posix_isatty(STDIN)) {
-            $process->setTty(true);
-        }
-
-        $process->setTimeout(null)->run(function ($type, $line) {
-            $this->command->output->write($line);
-        });
-
-        if (! $process->isSuccessful()) {
-            $this->errorInstall();
-        }
+        $this->runCommand($command);
 
         $this->command->output->writeln(' <info>✔</info>');
     }

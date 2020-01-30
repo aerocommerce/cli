@@ -50,7 +50,7 @@ class UpdateComposerFile extends InstallStep
      *
      * @return array
      */
-    protected function getComposerConfiguration()
+    protected function getComposerConfiguration(): array
     {
         return json_decode(file_get_contents(
             $this->command->path.'/composer.json'
@@ -63,7 +63,7 @@ class UpdateComposerFile extends InstallStep
      * @param  array $composer
      * @return array
      */
-    protected function addDependencies($composer)
+    protected function addDependencies($composer): array
     {
         foreach ($this->dependencies as $dependency => $version) {
             $composer['require'][$dependency] = $version;
@@ -78,7 +78,7 @@ class UpdateComposerFile extends InstallStep
      * @param  array  $composer
      * @return array
      */
-    protected function addRepository($composer)
+    protected function addRepository($composer): array
     {
         if (! isset($composer['repositories'])) {
             $composer['repositories'] = [];
@@ -98,7 +98,7 @@ class UpdateComposerFile extends InstallStep
      * @param  array $composer
      * @return array
      */
-    protected function addScripts($composer)
+    protected function addScripts($composer): array
     {
         if (! isset($composer['scripts'])) {
             $composer['scripts'] = [];
@@ -123,7 +123,7 @@ class UpdateComposerFile extends InstallStep
      * @param  array $composer
      * @return void
      */
-    protected function writeComposerFile($composer)
+    protected function writeComposerFile($composer): void
     {
         file_put_contents(
             $this->command->path.'/composer.json',

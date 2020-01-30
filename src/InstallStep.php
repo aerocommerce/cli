@@ -2,6 +2,8 @@
 
 namespace Aero\Cli;
 
+use Symfony\Component\Process\Process;
+
 abstract class InstallStep implements InstallationStepInterface
 {
     /**
@@ -26,7 +28,7 @@ abstract class InstallStep implements InstallationStepInterface
      *
      * @param null|string $message
      */
-    protected function errorInstall($message = null)
+    protected function errorInstall($message = null): void
     {
         $this->command->output->error($message ?: 'Installation Failed');
         die(0);
@@ -37,7 +39,7 @@ abstract class InstallStep implements InstallationStepInterface
      *
      * @return string
      */
-    protected function findComposer()
+    protected function findComposer(): string
     {
         $composerPath = getcwd().'/composer.phar';
 
@@ -46,5 +48,22 @@ abstract class InstallStep implements InstallationStepInterface
         }
 
         return 'composer';
+    }
+
+    protected function runCommand(array $command): void
+    {
+        $process = new Process($command, null, null, null, null);
+
+        if ('\\' !== DIRECTORY_SEPARATOR && posix_isatty(STDIN)) {
+            $process->setTty(true);
+        }
+
+        $process->setTimeout(null)->run(function ($type, $line) {
+            $this->command->output->write($line);
+        });
+
+        if (! $process->isSuccessful()) {
+            $this->errorInstall();
+        }
     }
 }
