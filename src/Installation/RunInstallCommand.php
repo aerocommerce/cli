@@ -17,6 +17,7 @@ class RunInstallCommand extends InstallStep
             PHP_BINARY,
             "{$this->command->project}/artisan",
             'aero:install',
+            '--seed',
         ];
 
         $this->runCommand($command);
