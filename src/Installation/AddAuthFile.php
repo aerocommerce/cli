@@ -35,7 +35,7 @@ class AddAuthFile extends InstallStep
 
         $this->writeAuthFile([
             'http-basic' => [
-                'packages.aerocommerce.com' => [
+                'agora.aerocommerce.com' => [
                     'username' => $this->username,
                     'password' => $this->password,
                 ],
@@ -52,11 +52,8 @@ class AddAuthFile extends InstallStep
     {
         $this->command->output->section('Please provide your credentials for the Aero Commerce Package Repository');
 
-        $password = new Question('Password');
-        $password->setHidden(true)->setHiddenFallback(false);
-
         $this->username = $this->command->output->askQuestion(new Question('Username'));
-        $this->password = $this->command->output->askQuestion($password);
+        $this->password = $this->command->output->askQuestion(new Question('Password'));
     }
 
     /**
@@ -91,7 +88,7 @@ class AddAuthFile extends InstallStep
         $client = HttpClient::create([
             'auth_basic' => [$this->username, $this->password],
         ]);
-        $response = $client->request('GET', 'https://packages.aerocommerce.com/check');
+        $response = $client->request('GET', 'https://agora.aerocommerce.com/check');
 
         $statusCode = $response->getStatusCode();
 
