@@ -24,26 +24,3 @@ aero new my-site
 ```
 
 This will download the latest version and install it into the `my-site` directory.
-
-### Configuring Your Site
-
-Run the configure command in your new site:
-
-```bash
-cd my-site
-php artisan aero:configure
-```
-
-and answer the questions.
-
-Alternatively you can manually set parameters in the generated `.env` file.
-
-### Finalising installation
-
-Finally run:
-
-```bash
-php artisan aero:install
-```
-
-to run database migrations etc.
