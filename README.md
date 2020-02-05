@@ -15,12 +15,12 @@ Once installed, you should be able to run `aero {command}` from within any direc
 
 ## Installing Aero Commerce
 
-### Generating a New Site
+### Generating a New Project
 
-Use the `new` command to create a new Aero Commerce site:
+Use the `new` command to create a new Aero Commerce project:
 
 ```
-aero new my-site
+aero new my-store
 ```
 
-This will download the latest version and install it into the `my-site` directory.
+This will download the latest version and install it into the `my-store` directory.
