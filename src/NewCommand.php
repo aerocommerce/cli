@@ -2,18 +2,13 @@
 
 namespace Aero\Cli;
 
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 class NewCommand extends Command
 {
-    /**
-     * The installer steps to run.
-     *
-     * @var array
-     */
     protected $installers = [
         Installation\CreateProject::class,
         Installation\RemoveRoutes::class,
@@ -24,50 +19,47 @@ class NewCommand extends Command
         Installation\RunInstallCommand::class,
     ];
 
-    /**
-     * Configure the command options.
-     *
-     * @return void
-     */
     protected function configure(): void
     {
         $this->setName('new')
-            ->setDescription('Create a new Aero Commerce application')
-            ->addArgument('project');
+            ->setDescription('Create a new Aero Commerce project')
+            ->addArgument('project', InputArgument::OPTIONAL);
     }
 
-    /**
-     * Execute the command.
-     *
-     * @param  InputInterface $input
-     * @param  OutputInterface $output
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->input = $input;
         $this->output = new SymfonyStyle($input, $output);
-        $this->project = $input->getArgument('project') ?? $this->output->askQuestion(new Question('Project directory (relative to current directory)'));
-        $this->path = getcwd().'/'.$this->project;
+        $this->project = $input->getArgument('project');
+
+        $cwd = getcwd();
+
+        $this->relativePath = $this->project;
+
+        if (! $this->project) {
+            $this->project = basename($cwd);
+            $cwd = dirname($cwd);
+
+            $this->relativePath = '.';
+        }
+
+        $this->path = $cwd.'/'.$this->project;
 
         $this->verifyApplicationDoesntExist($this->path);
 
-        $this->output->title('Creating a new Aero Commerce store');
+        $this->output->title('Creating a new Aero Commerce project');
 
         $installers = $this->getInstallers();
 
         foreach ($installers as $installer) {
-            (new $installer($this))->install();
+            $step = new $installer($this);
+            /** @var \Aero\Cli\InstallStepInterface $step */
+            $step->install();
         }
 
         return 0;
     }
 
-    /**
-     * The installer steps for this command.
-     *
-     * @return array
-     */
     protected function getInstallers(): array
     {
         return $this->installers;

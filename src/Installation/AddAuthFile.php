@@ -18,12 +18,7 @@ class AddAuthFile extends InstallStep
      */
     protected $password;
 
-    /**
-     * Run the installation helper.
-     *
-     * @return void
-     */
-    public function install()
+    public function install(): void
     {
         while (! $this->username || ! $this->password || ! $this->checkCredentials()) {
             if (! $this->getCredentialsFromEnv()) {
@@ -50,17 +45,12 @@ class AddAuthFile extends InstallStep
      */
     protected function promptForCredentials(): void
     {
-        $this->command->output->section('Please provide your credentials for the Aero Commerce Package Repository');
+        $this->command->output->section('Please provide the package repository credentials for the project');
 
         $this->username = $this->command->output->askQuestion(new Question('Username'));
         $this->password = $this->command->output->askQuestion(new Question('Password'));
     }
 
-    /**
-     * Get the repository credentials from environment variables if possible.
-     *
-     * @return bool
-     */
     protected function getCredentialsFromEnv(): bool
     {
         $username = getenv('PACKAGE_REPOSITORY_USERNAME');
@@ -76,11 +66,6 @@ class AddAuthFile extends InstallStep
         return false;
     }
 
-    /**
-     * Check the credentials are correct.
-     *
-     * @return bool
-     */
     protected function checkCredentials(): bool
     {
         $this->command->output->write('Checking credentials...');
@@ -99,13 +84,7 @@ class AddAuthFile extends InstallStep
         return $authorised;
     }
 
-    /**
-     * Write the auth.json file to disk.
-     *
-     * @param  array $auth
-     * @return void
-     */
-    protected function writeAuthFile($auth): void
+    protected function writeAuthFile(array $auth): void
     {
         file_put_contents(
             $this->command->path.'/auth.json',

@@ -1,36 +1,32 @@
 {
-  "name": "aerocommerce/cli",
-  "description": "Aero Commerce CLI Tool.",
-  "keywords": [
-    "aero",
-    "ecommerce"
-  ],
-  "license": "MIT",
-  "autoload": {
-    "psr-4": {
-      "Aero\\Cli\\": "src/"
+    "name": "aerocommerce/cli",
+    "description": "Aero Commerce CLI Tool.",
+    "keywords": [
+        "aero",
+        "ecommerce"
+    ],
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Aero\\Cli\\": "src/"
+        }
     },
-    "files": [
-      "src/helpers.php"
+    "require": {
+        "php": "^7.2.9",
+        "ext-json": "*",
+        "illuminate/support": "^5.8|^6.0",
+        "symfony/console": "^4.2|^5.0",
+        "symfony/process": "^4.2|^5.0",
+        "symfony/http-client": "^4.2|^5.0"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1.x-dev"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "bin": [
+        "aero"
     ]
-  },
-  "require": {
-    "php": "^7.2",
-    "ext-json": "*",
-    "ext-posix": "*",
-    "illuminate/support": "^6.0",
-    "symfony/console": "^4.2|^5.0",
-    "symfony/process": "^4.2|^5.0",
-    "symfony/http-client": "^4.2|^5.0"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "0.1.x-dev"
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "bin": [
-    "aero"
-  ]
 }

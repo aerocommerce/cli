@@ -6,11 +6,6 @@ use Aero\Cli\InstallStep;
 
 class UpdateComposerFile extends InstallStep
 {
-    /**
-     * The dependencies required.
-     *
-     * @var array
-     */
     protected $dependencies = [
         'aerocommerce/admin' => '^0',
         'aerocommerce/core' => '^0',
@@ -18,23 +13,13 @@ class UpdateComposerFile extends InstallStep
         'aerocommerce/default-theme' => '^0',
     ];
 
-    /**
-     * The scripts to run.
-     *
-     * @var array
-     */
     protected $scripts = [
         'post-autoload-dump' => [
             '@php artisan aero:link --ansi',
         ],
     ];
 
-    /**
-     * Run the installation helper.
-     *
-     * @return void
-     */
-    public function install()
+    public function install(): void
     {
         $composer = $this->getComposerConfiguration();
 
@@ -45,11 +30,6 @@ class UpdateComposerFile extends InstallStep
         $this->writeComposerFile($composer);
     }
 
-    /**
-     * Read the Composer file from disk.
-     *
-     * @return array
-     */
     protected function getComposerConfiguration(): array
     {
         return json_decode(file_get_contents(
@@ -57,13 +37,7 @@ class UpdateComposerFile extends InstallStep
         ), true);
     }
 
-    /**
-     * Add the Composer dependencies required for an Aero Commerce Store.
-     *
-     * @param  array $composer
-     * @return array
-     */
-    protected function addDependencies($composer): array
+    protected function addDependencies(array $composer): array
     {
         foreach ($this->dependencies as $dependency => $version) {
             $composer['require'][$dependency] = $version;
@@ -72,13 +46,7 @@ class UpdateComposerFile extends InstallStep
         return $composer;
     }
 
-    /**
-     * Add the Aero Commerce package repository to the Composer array.
-     *
-     * @param  array  $composer
-     * @return array
-     */
-    protected function addRepository($composer): array
+    protected function addRepository(array $composer): array
     {
         if (! isset($composer['repositories'])) {
             $composer['repositories'] = [];
@@ -92,13 +60,7 @@ class UpdateComposerFile extends InstallStep
         return $composer;
     }
 
-    /**
-     * Add scripts for an Aero Commerce Store.
-     *
-     * @param  array $composer
-     * @return array
-     */
-    protected function addScripts($composer): array
+    protected function addScripts(array $composer): array
     {
         if (! isset($composer['scripts'])) {
             $composer['scripts'] = [];
@@ -117,13 +79,7 @@ class UpdateComposerFile extends InstallStep
         return $composer;
     }
 
-    /**
-     * Write the given Composer configuration back to disk.
-     *
-     * @param  array $composer
-     * @return void
-     */
-    protected function writeComposerFile($composer): void
+    protected function writeComposerFile(array $composer): void
     {
         file_put_contents(
             $this->command->path.'/composer.json',

@@ -24,3 +24,5 @@ aero new my-store
 ```
 
 This will download the latest version and install it into the `my-store` directory.
+To install the project into the current directory, simply use `aero new` without specifying a project name.
+The project will be inferred from the name of the current directory.

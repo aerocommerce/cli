@@ -6,12 +6,7 @@ use Aero\Cli\InstallStep;
 
 class CreateProject extends InstallStep
 {
-    /**
-     * Run the installation helper.
-     *
-     * @return void
-     */
-    public function install()
+    public function install(): void
     {
         $this->command->output->write('Downloading base project...');
 
@@ -19,7 +14,7 @@ class CreateProject extends InstallStep
             $this->findComposer(),
             'create-project',
             'laravel/laravel=6.0',
-            $this->command->project,
+            $this->command->relativePath,
             '--quiet',
             '--no-scripts',
             '--no-install',

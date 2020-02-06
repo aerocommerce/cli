@@ -6,16 +6,11 @@ use Aero\Cli\InstallStep;
 
 class RunConfigureCommand extends InstallStep
 {
-    /**
-     * Run the installation helper.
-     *
-     * @return void
-     */
-    public function install()
+    public function install(): void
     {
         $command = [
             PHP_BINARY,
-            "{$this->command->project}/artisan",
+            "{$this->command->relativePath}/artisan",
             'aero:configure',
         ];
 
