@@ -5,6 +5,7 @@ namespace Aero\Cli;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 class NewCommand extends Command
@@ -32,18 +33,26 @@ class NewCommand extends Command
         $this->output = new SymfonyStyle($input, $output);
         $this->project = $input->getArgument('project');
 
+        if (! $this->project) {
+            $this->project = $this->output->askQuestion(new Question('Project directory (relative to current directory)'));
+
+            if (! $this->project) {
+                $this->project = '.';
+            }
+        }
+
         $cwd = getcwd();
 
         $this->relativePath = $this->project;
 
-        if (! $this->project) {
+        if ($this->project === '.') {
             $this->project = basename($cwd);
             $cwd = dirname($cwd);
-
-            $this->relativePath = '.';
         }
 
         $this->path = $cwd.'/'.$this->project;
+
+        $this->project = basename($this->project);
 
         $this->verifyApplicationDoesntExist($this->path);
 
