@@ -13,7 +13,7 @@ class CreateProject extends InstallStep
         $command = [
             $this->findComposer(),
             'create-project',
-            'laravel/laravel=6.0',
+            'laravel/laravel=~6.0',
             $this->command->relativePath,
             '--quiet',
             '--no-scripts',
