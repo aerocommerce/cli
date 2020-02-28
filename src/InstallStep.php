@@ -2,6 +2,7 @@
 
 namespace Aero\Cli;
 
+use RuntimeException;
 use Symfony\Component\Process\Process;
 
 abstract class InstallStep implements InstallStepInterface
@@ -39,7 +40,11 @@ abstract class InstallStep implements InstallStepInterface
         $process = new Process($command, null, null, null, null);
 
         if ('\\' !== DIRECTORY_SEPARATOR && file_exists('/dev/tty') && is_readable('/dev/tty')) {
-            $process->setTty(true);
+            try {
+                $process->setTty(true);
+            } catch (RuntimeException $e) {
+                $this->command->output->writeln('Warning: '.$e->getMessage());
+            }
         }
 
         $process->setTimeout(null)->run(function ($_, $line) {
