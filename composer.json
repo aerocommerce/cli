@@ -14,14 +14,14 @@
     "require": {
         "php": "^7.2.9",
         "ext-json": "*",
-        "illuminate/support": "^5.8|^6.0",
+        "illuminate/support": "^5.8|^6.0|^7.0",
         "symfony/console": "^4.2|^5.0",
         "symfony/process": "^4.2|^5.0",
         "symfony/http-client": "^4.2|^5.0"
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.1.x-dev"
+            "dev-master": "0.3.x-dev"
         }
     },
     "minimum-stability": "dev",
