@@ -8,10 +8,21 @@ class UpdateComposerFile extends InstallStep
 {
     protected $dependencies = [
         'aerocommerce/admin' => '^0',
-        'aerocommerce/core' => '^0',
-        'aerocommerce/elastic-search' => '^0',
         'aerocommerce/checkout' => '^0',
+        'aerocommerce/core' => '^0',
         'aerocommerce/default-theme' => '^0',
+        'aerocommerce/elastic-search' => '^0',
+    ];
+
+    protected $devDependencies = [
+        'aerocommerce/dev' => '^0',
+    ];
+
+    protected $repositories = [
+        [
+            'type' => 'composer',
+            'url' => 'https://agora.aerocommerce.com',
+        ],
     ];
 
     protected $scripts = [
@@ -24,7 +35,11 @@ class UpdateComposerFile extends InstallStep
     {
         $composer = $this->getComposerConfiguration();
 
-        $composer = $this->addRepository($this->addDependencies($composer));
+        $composer = $this->addRepositories(
+            $this->addDependencies(
+                $this->addDevDependencies($composer)
+            )
+        );
 
         $composer = $this->addScripts($composer);
 
@@ -47,16 +62,24 @@ class UpdateComposerFile extends InstallStep
         return $composer;
     }
 
-    protected function addRepository(array $composer): array
+    protected function addDevDependencies(array $composer): array
+    {
+        foreach ($this->devDependencies as $dependency => $version) {
+            $composer['require-dev'][$dependency] = $version;
+        }
+
+        return $composer;
+    }
+
+    protected function addRepositories(array $composer): array
     {
         if (! isset($composer['repositories'])) {
             $composer['repositories'] = [];
         }
 
-        $composer['repositories'][] = [
-            'type' => 'composer',
-            'url' => 'https://agora.aerocommerce.com',
-        ];
+        foreach ($this->repositories as $repository) {
+            $composer['repositories'][] = $repository;
+        }
 
         return $composer;
     }
