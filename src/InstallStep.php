@@ -21,7 +21,7 @@ abstract class InstallStep implements InstallStepInterface
     {
         $this->command->output->error($message ?: 'Installation Failed');
 
-        die(1);
+        exit(1);
     }
 
     protected function findComposer(): string
