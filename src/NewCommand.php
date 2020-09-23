@@ -13,6 +13,7 @@ class NewCommand extends Command
     protected $installers = [
         Installation\CreateProject::class,
         Installation\RemoveRoutes::class,
+        Installation\RemoveRobots::class,
         Installation\UpdateComposerFile::class,
         Installation\AddAuthFile::class,
         Installation\RunComposerScripts::class,
@@ -61,9 +62,7 @@ class NewCommand extends Command
         $installers = $this->getInstallers();
 
         foreach ($installers as $installer) {
-            $step = new $installer($this);
-            /** @var \Aero\Cli\InstallStepInterface $step */
-            $step->install();
+            (new $installer($this))->install();
         }
 
         return 0;
