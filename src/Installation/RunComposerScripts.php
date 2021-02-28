@@ -20,7 +20,7 @@ class RunComposerScripts extends InstallStep
 
         $process = Process::fromShellCommandline(implode(' && ', $commands), $this->command->path, null, null, null);
 
-        if ('\\' !== DIRECTORY_SEPARATOR && file_exists('/dev/tty') && is_readable('/dev/tty')) {
+        if ($this->interaction && '\\' !== DIRECTORY_SEPARATOR && file_exists('/dev/tty') && is_readable('/dev/tty')) {
             $process->setTty(true);
         }
 
