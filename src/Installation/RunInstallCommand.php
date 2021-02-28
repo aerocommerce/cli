@@ -15,6 +15,10 @@ class RunInstallCommand extends InstallStep
             '--seed',
         ];
 
+        if (! $this->interaction) {
+            $command[] = '--no-interaction';
+        }
+
         $this->runCommand($command);
     }
 }

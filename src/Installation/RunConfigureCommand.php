@@ -14,6 +14,10 @@ class RunConfigureCommand extends InstallStep
             'aero:configure',
         ];
 
+        if (! $this->interaction) {
+            $command[] = '--no-interaction';
+        }
+
         $this->runCommand($command);
     }
 }
