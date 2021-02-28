@@ -4,6 +4,7 @@ namespace Aero\Cli;
 
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -25,7 +26,7 @@ class NewCommand extends Command
     {
         $this->setName('new')
             ->setDescription('Create a new Aero Commerce project')
-            ->addArgument('project', InputArgument::OPTIONAL);
+            ->addArgument('project', InputArgument::OPTIONAL, 'The name of the project');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -61,8 +62,10 @@ class NewCommand extends Command
 
         $installers = $this->getInstallers();
 
+        $interaction = ! $this->input->getOption('no-interaction');
+
         foreach ($installers as $installer) {
-            (new $installer($this))->install();
+            (new $installer($this))->setInteraction($interaction)->install();
         }
 
         return 0;

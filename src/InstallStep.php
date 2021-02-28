@@ -12,9 +12,18 @@ abstract class InstallStep implements InstallStepInterface
      */
     protected $command;
 
+    protected $interaction = true;
+
     public function __construct(Command $command)
     {
         $this->command = $command;
+    }
+
+    public function setInteraction(bool $enabled): InstallStepInterface
+    {
+        $this->interaction = $enabled;
+
+        return $this;
     }
 
     protected function errorInstall(?string $message = null): void
@@ -39,7 +48,8 @@ abstract class InstallStep implements InstallStepInterface
     {
         $process = new Process($command, null, null, null, null);
 
-        if ('\\' !== DIRECTORY_SEPARATOR && file_exists('/dev/tty') && is_readable('/dev/tty')) {
+        if ($this->interaction
+            && '\\' !== DIRECTORY_SEPARATOR && file_exists('/dev/tty') && is_readable('/dev/tty')) {
             try {
                 $process->setTty(true);
             } catch (RuntimeException $e) {
