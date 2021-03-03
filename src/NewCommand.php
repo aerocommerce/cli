@@ -4,28 +4,19 @@ namespace Aero\Cli;
 
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 class NewCommand extends Command
 {
-    protected $installers = [
-        Installation\CreateProject::class,
-        Installation\RemoveRoutes::class,
-        Installation\RemoveRobots::class,
-        Installation\UpdateComposerFile::class,
-        Installation\AddAuthFile::class,
-        Installation\RunComposerScripts::class,
-        Installation\RunConfigureCommand::class,
-        Installation\RunInstallCommand::class,
-    ];
-
     protected function configure(): void
     {
         $this->setName('new')
             ->setDescription('Create a new Aero Commerce project')
-            ->addArgument('project', InputArgument::OPTIONAL, 'The name of the project');
+            ->addArgument('project', InputArgument::OPTIONAL, 'The name of the project')
+            ->addOption('no-install', null, InputOption::VALUE_NONE, 'Create and configure the project without running the installer');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -72,6 +63,20 @@ class NewCommand extends Command
 
     protected function getInstallers(): array
     {
-        return $this->installers;
+        $installers = [
+            Installation\CreateProject::class,
+            Installation\RemoveRoutes::class,
+            Installation\RemoveRobots::class,
+            Installation\UpdateComposerFile::class,
+            Installation\AddAuthFile::class,
+            Installation\RunComposerScripts::class,
+            Installation\RunConfigureCommand::class,
+        ];
+
+        if (! $this->input->getOption('no-install')) {
+            $installers[] = Installation\RunInstallCommand::class;
+        }
+
+        return $installers;
     }
 }
