@@ -10,7 +10,7 @@ class StartBackgroundWorker extends InstallStep
     {
         $command = [
             PHP_BINARY,
-            "artisan",
+            'artisan',
             'aero:setup:worker',
             '--no-interaction',
         ];

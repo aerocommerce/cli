@@ -46,7 +46,7 @@ class InstallCommand extends Command
 
         $this->verifyApplicationDoesntExist($this->path);
 
-        $output = <<<EOL
+        $output = <<<'EOL'
 
 
  █████╗ ███████╗██████╗  ██████╗ 
@@ -57,7 +57,6 @@ class InstallCommand extends Command
 ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝ ╚═════╝
 
 EOL;
-
 
         $this->output->writeln($output);
 
