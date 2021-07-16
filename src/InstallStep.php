@@ -44,9 +44,15 @@ abstract class InstallStep implements InstallStepInterface
         return 'composer';
     }
 
-    protected function runCommand(array $command): void
+    protected function runCommand(array $command, string $cwd = null, bool $async = false): void
     {
-        $process = new Process($command, null, null, null, null);
+        if ($async) {
+            $command[] = '> /dev/null 2>&1 &';
+
+            $process = Process::fromShellCommandline(implode(' ', $command), $cwd, null, null, null)->disableOutput();
+        } else {
+            $process = new Process($command, $cwd, null, null, null);
+        }
 
         if ($this->interaction
             && '\\' !== DIRECTORY_SEPARATOR && file_exists('/dev/tty') && is_readable('/dev/tty')) {
@@ -62,7 +68,7 @@ abstract class InstallStep implements InstallStepInterface
         });
 
         if (! $process->isSuccessful()) {
-            $this->errorInstall();
+            $this->errorInstall($process->getErrorOutput());
         }
     }
 }
