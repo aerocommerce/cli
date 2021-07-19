@@ -12,7 +12,7 @@ class InstallCommand extends Command
 {
     protected function configure(): void
     {
-        $this->setName('install')
+        $this->setName('new')
             ->setDescription('Install a new Aero Commerce store')
             ->addArgument('project', InputArgument::OPTIONAL, 'The name of the project');
     }
@@ -81,7 +81,7 @@ EOL;
             Installation\RequireInstallerDependencies::class,
             Installation\RunComposerScripts::class,
             Installation\AddSetupJson::class,
-            //Installation\StartBackgroundWorker::class,
+            Installation\StartBackgroundWorker::class,
         ];
 
         return $installers;
