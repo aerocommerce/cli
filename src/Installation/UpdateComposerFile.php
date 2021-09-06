@@ -7,7 +7,7 @@ use Aero\Cli\InstallStep;
 class UpdateComposerFile extends InstallStep
 {
     protected $dependencies = [
-        'aerocommerce/admin' => '^0',
+        'aerocommerce/admin' => '^1',
         'aerocommerce/checkout' => '^0',
         'aerocommerce/core' => '^0',
         'aerocommerce/default-theme' => '^0',
