@@ -46,9 +46,7 @@ class NewCommand extends Command
 
         $this->project = basename($this->project);
 
-        if ($this->relativePath !== '.') {
-            $this->verifyApplicationDoesntExist($this->path);
-        }
+        $this->verifyApplicationDoesntExist($this->path);
 
         $this->output->title('Creating a new Aero Commerce project');
 
