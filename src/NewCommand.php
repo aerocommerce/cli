@@ -16,7 +16,8 @@ class NewCommand extends Command
         $this->setName('new')
             ->setDescription('Create a new Aero Commerce project')
             ->addArgument('project', InputArgument::OPTIONAL, 'The name of the project')
-            ->addOption('no-install', null, InputOption::VALUE_NONE, 'Create and configure the project without running the installer');
+            ->addOption('no-install', null, InputOption::VALUE_NONE, 'Create and configure the project without running the installer')
+            ->addOption('next', null, InputOption::VALUE_NONE, 'Install the project using the upcoming versions');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -63,15 +64,21 @@ class NewCommand extends Command
 
     protected function getInstallers(): array
     {
-        $installers = [
-            Installation\CreateProject::class,
-            Installation\RemoveRoutes::class,
-            Installation\RemoveRobots::class,
-            Installation\UpdateComposerFile::class,
-            Installation\AddAuthFile::class,
-            Installation\RunComposerScripts::class,
-            Installation\RunConfigureCommand::class,
-        ];
+        $installers = [];
+        
+        $installers[] = Installation\CreateProject::class;
+        $installers[] = Installation\RemoveRoutes::class;
+        $installers[] = Installation\RemoveRobots::class;
+
+        if ($this->input->getOption('next')) {
+            $installers[] = Installation\UpdateComposerFileNext::class;
+        } else {
+            $installers[] = Installation\UpdateComposerFile::class;
+        }
+
+        $installers[] = Installation\AddAuthFile::class;
+        $installers[] = Installation\RunComposerScripts::class;
+        $installers[] = Installation\RunConfigureCommand::class;
 
         if (! $this->input->getOption('no-install')) {
             $installers[] = Installation\RunInstallCommand::class;
