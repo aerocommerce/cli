@@ -65,7 +65,7 @@ class NewCommand extends Command
     protected function getInstallers(): array
     {
         $installers = [];
-        
+
         $installers[] = Installation\CreateProject::class;
         $installers[] = Installation\RemoveRoutes::class;
         $installers[] = Installation\RemoveRobots::class;
