@@ -12,7 +12,7 @@ class RunConfigureCommandNext extends InstallStep
             PHP_BINARY,
             "{$this->command->relativePath}/artisan",
             'aero:configure',
-            '--no-interaction'
+            '--no-interaction',
         ];
 
         $this->runCommand($command);
