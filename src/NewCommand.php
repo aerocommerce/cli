@@ -17,7 +17,8 @@ class NewCommand extends Command
             ->setDescription('Create a new Aero Commerce project')
             ->addArgument('project', InputArgument::OPTIONAL, 'The name of the project')
             ->addOption('no-install', null, InputOption::VALUE_NONE, 'Create and configure the project without running the installer')
-            ->addOption('next', null, InputOption::VALUE_NONE, 'Install the project using the upcoming versions');
+            ->addOption('next', null, InputOption::VALUE_NONE, 'Install the project using the upcoming versions')
+            ->addOption('laravel', null, InputOption::VALUE_REQUIRED, 'The version of Laravel to build the base project');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
