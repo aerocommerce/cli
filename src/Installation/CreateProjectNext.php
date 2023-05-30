@@ -10,7 +10,7 @@ class CreateProjectNext extends InstallStep
     {
         $this->command->output->write('Downloading base project...');
 
-        $laravel = $this->command->input->getOption('laravel') ?: '9';
+        $laravel = $this->command->input->getOption('laravel') ?: '10';
 
         if (is_numeric($laravel)) {
             $laravel = "~{$laravel}.0";

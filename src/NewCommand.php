@@ -84,12 +84,7 @@ class NewCommand extends Command
 
         $installers[] = Installation\AddAuthFile::class;
         $installers[] = Installation\RunComposerScripts::class;
-
-        if ($this->input->getOption('next')) {
-            $installers[] = Installation\RunConfigureCommandNext::class;
-        } else {
-            $installers[] = Installation\RunConfigureCommand::class;
-        }
+        $installers[] = Installation\RunConfigureCommand::class;
 
         if (! $this->input->getOption('no-install')) {
             $installers[] = Installation\RunInstallCommand::class;
