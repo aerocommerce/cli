@@ -10,10 +10,16 @@ class CreateProject extends InstallStep
     {
         $this->command->output->write('Downloading base project...');
 
+        $laravel = $this->command->input->getOption('laravel') ?: '10';
+
+        if (is_numeric($laravel)) {
+            $laravel = "~{$laravel}.0";
+        }
+
         $command = [
             $this->findComposer(),
             'create-project',
-            'laravel/laravel=~6.0',
+            "laravel/laravel={$laravel}",
             $this->command->relativePath,
             '--quiet',
             '--no-scripts',

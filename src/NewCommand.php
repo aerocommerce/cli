@@ -67,12 +67,7 @@ class NewCommand extends Command
     {
         $installers = [];
 
-        if ($this->input->getOption('next')) {
-            $installers[] = Installation\CreateProjectNext::class;
-        } else {
-            $installers[] = Installation\CreateProject::class;
-        }
-
+        $installers[] = Installation\CreateProject::class;
         $installers[] = Installation\RemoveRoutes::class;
         $installers[] = Installation\RemoveRobots::class;
 

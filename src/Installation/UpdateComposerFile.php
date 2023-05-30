@@ -7,15 +7,16 @@ use Aero\Cli\InstallStep;
 class UpdateComposerFile extends InstallStep
 {
     protected $dependencies = [
+        'aerocommerce/account-area' => '^0',
         'aerocommerce/admin' => '^1',
         'aerocommerce/checkout' => '^0',
         'aerocommerce/core' => '^0',
         'aerocommerce/default-theme' => '^0',
-        'aerocommerce/elastic-search' => '^0',
+        'aerocommerce/elastic-search' => '^1',
     ];
 
     protected $devDependencies = [
-        'aerocommerce/dev' => '^0',
+        'aerocommerce/dev' => '^1',
     ];
 
     protected $repositories = [
