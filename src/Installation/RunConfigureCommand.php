@@ -18,6 +18,8 @@ class RunConfigureCommand extends InstallStep
             $command[] = '--no-interaction';
         }
 
+        echo implode(' ', $command);
+
         $this->runCommand($command);
     }
 }
