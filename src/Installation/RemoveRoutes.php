@@ -19,6 +19,10 @@ class RemoveRoutes extends InstallStep
 
     protected function updateFile(string $path): void
     {
+        if (! file_exists($path)) {
+            return;
+        }
+
         $contents = file_get_contents($path);
 
         $contents = preg_replace('/(^Route::.*\;)/ms', '', $contents);
