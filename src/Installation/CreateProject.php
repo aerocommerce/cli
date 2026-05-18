@@ -3,6 +3,7 @@
 namespace Aero\Cli\Installation;
 
 use Aero\Cli\InstallStep;
+use Aero\Cli\NewCommand;
 
 class CreateProject extends InstallStep
 {
@@ -10,7 +11,7 @@ class CreateProject extends InstallStep
     {
         $this->command->output->write('Downloading base project...');
 
-        $laravel = $this->command->input->getOption('laravel') ?: '12';
+        $laravel = $this->command->input->getOption('laravel') ?: NewCommand::DEFAULT_LARAVEL_VERSION;
 
         if (is_numeric($laravel)) {
             $laravel = "~{$laravel}.0";

@@ -11,6 +11,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class NewCommand extends Command
 {
+    public const string DEFAULT_LARAVEL_VERSION = '12';
+
     protected function configure(): void
     {
         $this->setName('new')
@@ -70,6 +72,7 @@ class NewCommand extends Command
         $installers[] = Installation\CreateProject::class;
         $installers[] = Installation\RemoveRoutes::class;
         $installers[] = Installation\RemoveRobots::class;
+        $installers[] = Installation\UpdateCacheConfigFile::class;
 
         if ($this->input->getOption('next')) {
             $installers[] = Installation\UpdateComposerFileNext::class;
