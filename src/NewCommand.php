@@ -70,10 +70,10 @@ class NewCommand extends Command
         $installers = [];
 
         $installers[] = Installation\CreateProject::class;
-        $installers[] = Installation\RemoveRoutes::class;
-        $installers[] = Installation\RemoveRobots::class;
         $installers[] = Installation\UpdateCacheConfigFile::class;
         $installers[] = Installation\UpdateSessionConfigFile::class;
+        $installers[] = Installation\RemoveRoutes::class;
+        $installers[] = Installation\RemoveRobots::class;
 
         if ($this->input->getOption('next')) {
             $installers[] = Installation\UpdateComposerFileNext::class;
