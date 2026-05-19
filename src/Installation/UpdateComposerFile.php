@@ -97,6 +97,10 @@ class UpdateComposerFile extends InstallStep
             $composer['scripts'] = [];
         }
 
+        foreach ($this->overrideScripts as $area => $scripts) {
+            $composer['scripts'][$area] = $scripts;
+        }
+
         foreach ($this->scripts as $area => $scripts) {
             if (! isset($composer['scripts'][$area])) {
                 $composer['scripts'][$area] = [];
@@ -105,10 +109,6 @@ class UpdateComposerFile extends InstallStep
             foreach ($scripts as $script) {
                 $composer['scripts'][$area][] = $script;
             }
-        }
-
-        foreach ($this->overrideScripts as $area => $scripts) {
-            $composer['scripts'][$area] = $scripts;
         }
 
         return $composer;
