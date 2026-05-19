@@ -11,7 +11,7 @@ class CreateProject extends InstallStep
     {
         $this->command->output->write('Downloading base project...');
 
-        $laravel = $this->command->input->getOption('laravel') ?: NewCommand::DEFAULT_LARAVEL_VERSION;
+        $laravel = $this->command->input->getOption('laravel') ?: '13';
 
         if (is_numeric($laravel)) {
             $laravel = "~{$laravel}.0";

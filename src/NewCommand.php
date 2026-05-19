@@ -11,8 +11,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class NewCommand extends Command
 {
-    public const string DEFAULT_LARAVEL_VERSION = '13';
-
     protected function configure(): void
     {
         $this->setName('new')
