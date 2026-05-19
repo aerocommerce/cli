@@ -20,7 +20,7 @@ class UpdateSessionConfigFile extends InstallStep
             return;
         }
 
-        $this->command->output->write('Updating config/session.php...');
+        $this->command->output->write('Setting session serialization to php...');
 
         $contents = preg_replace(
             "/'serialization'\s*=>\s*'json',/",

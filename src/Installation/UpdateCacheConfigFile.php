@@ -20,7 +20,7 @@ class UpdateCacheConfigFile extends InstallStep
             return;
         }
 
-        $this->command->output->write('Updating config/cache.php...');
+        $this->command->output->write('Setting cache serializable_classes to true...');
 
         $contents = preg_replace(
             "/'serializable_classes'\s*=>\s*false,/",
