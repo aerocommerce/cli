@@ -71,7 +71,6 @@ class NewCommand extends Command
         $installers[] = Installation\UpdateCacheConfigFile::class;
         $installers[] = Installation\UpdateSessionConfigFile::class;
         $installers[] = Installation\UpdateDatabaseConfigFile::class;
-        $installers[] = Installation\RemoveDatabaseSqlite::class;
         $installers[] = Installation\RemoveRoutes::class;
         $installers[] = Installation\RemoveRobots::class;
 

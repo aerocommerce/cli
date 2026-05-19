@@ -32,6 +32,12 @@ class UpdateComposerFile extends InstallStep
         ],
     ];
 
+    protected $overrideScripts = [
+        'post-create-project-cmd' => [
+            "@php artisan key:generate --ansi",
+        ],
+    ];
+
     public function install(): void
     {
         $composer = $this->getComposerConfiguration();
@@ -99,6 +105,10 @@ class UpdateComposerFile extends InstallStep
             foreach ($scripts as $script) {
                 $composer['scripts'][$area][] = $script;
             }
+        }
+
+        foreach ($this->overrideScripts as $area => $scripts) {
+            $composer['scripts'][$area] = $scripts;
         }
 
         return $composer;
