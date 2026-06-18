@@ -17,15 +17,14 @@ class CreateProject extends InstallStep
             $laravel = "~{$laravel}.0";
         }
 
-        $command = [
-            $this->findComposer(),
+        $command = array_merge($this->composerCommand(), [
             'create-project',
             "laravel/laravel={$laravel}",
             $this->command->relativePath,
             '--quiet',
             '--no-scripts',
             '--no-install',
-        ];
+        ]);
 
         $this->runCommand($command);
 

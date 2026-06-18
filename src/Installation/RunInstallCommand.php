@@ -19,6 +19,6 @@ class RunInstallCommand extends InstallStep
             $command[] = '--no-interaction';
         }
 
-        $this->runCommand($command);
+        $this->runInteractiveCommand($command);
     }
 }

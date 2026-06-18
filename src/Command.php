@@ -43,6 +43,13 @@ abstract class Command extends SymfonyCommand
      */
     public $relativePath;
 
+    /**
+     * The directory the installer was invoked from.
+     *
+     * @var string
+     */
+    public $installerWorkingDirectory;
+
     protected function verifyApplicationDoesntExist(string $directory): void
     {
         if (is_file($directory) || (is_dir($directory) && (new FilesystemIterator($directory))->valid())) {
