@@ -25,6 +25,7 @@ class NewCommand extends Command
     {
         $this->input = $input;
         $this->output = new SymfonyStyle($input, $output);
+        $this->installerWorkingDirectory = getcwd() ?: '';
         $this->project = $input->getArgument('project');
 
         if (! $this->project) {

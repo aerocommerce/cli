@@ -33,29 +33,31 @@ abstract class InstallStep implements InstallStepInterface
         exit(1);
     }
 
-    protected function findComposer(): string
+    /**
+     * @return list<string>
+     */
+    protected function composerCommand(): array
     {
-        $composerPath = getcwd().'/composer.phar';
+        $directory = $this->command->installerWorkingDirectory ?: getcwd();
+        $localPhar = $directory.DIRECTORY_SEPARATOR.'composer.phar';
 
-        if (file_exists($composerPath)) {
-            return '"'.PHP_BINARY.'" '.$composerPath;
+        if (is_file($localPhar)) {
+            return [PHP_BINARY, $localPhar];
         }
 
-        return 'composer';
+        return ['composer'];
     }
 
-    protected function runCommand(array $command): void
+    protected function findComposer(): string
     {
-        $process = new Process($command, null, null, null, null);
+        return $this->escapeCommandLine($this->composerCommand());
+    }
 
-        if ($this->interaction
-            && '\\' !== DIRECTORY_SEPARATOR && file_exists('/dev/tty') && is_readable('/dev/tty')) {
-            try {
-                $process->setTty(true);
-            } catch (RuntimeException $e) {
-                $this->command->output->writeln('Warning: '.$e->getMessage());
-            }
-        }
+    protected function runCommand(array $command, ?string $cwd = null): void
+    {
+        $process = new Process($command, $cwd, null, null, null);
+
+        $this->configureInteractiveProcess($process);
 
         $process->setTimeout(null)->run(function ($_, $line) {
             $this->command->output->write($line);
@@ -63,6 +65,72 @@ abstract class InstallStep implements InstallStepInterface
 
         if (! $process->isSuccessful()) {
             $this->errorInstall();
+        }
+    }
+
+    protected function runInteractiveCommand(array $command, ?string $cwd = null): void
+    {
+        if ($this->shouldRunInForeground()) {
+            $this->runCommandInForeground($command, $cwd);
+
+            return;
+        }
+
+        if ($this->interaction
+            && '\\' === DIRECTORY_SEPARATOR
+            && ! in_array('--no-interaction', $command, true)) {
+            $command[] = '--no-interaction';
+        }
+
+        $this->runCommand($command, $cwd);
+    }
+
+    protected function shouldRunInForeground(): bool
+    {
+        return $this->interaction
+            && '\\' === DIRECTORY_SEPARATOR
+            && defined('STDIN')
+            && stream_isatty(STDIN);
+    }
+
+    protected function runCommandInForeground(array $command, ?string $cwd = null): void
+    {
+        $previousDirectory = getcwd();
+
+        if ($cwd !== null && is_dir($cwd)) {
+            chdir($cwd);
+        }
+
+        passthru($this->escapeCommandLine($command), $exitCode);
+
+        if ($previousDirectory !== false) {
+            chdir($previousDirectory);
+        }
+
+        if ($exitCode !== 0) {
+            $this->errorInstall();
+        }
+    }
+
+    protected function escapeCommandLine(array $command): string
+    {
+        return implode(' ', array_map('escapeshellarg', $command));
+    }
+
+    protected function configureInteractiveProcess(Process $process): void
+    {
+        if (! $this->interaction || '\\' === DIRECTORY_SEPARATOR) {
+            return;
+        }
+
+        if (! file_exists('/dev/tty') || ! is_readable('/dev/tty')) {
+            return;
+        }
+
+        try {
+            $process->setTty(true);
+        } catch (RuntimeException $e) {
+            $this->command->output->writeln('Warning: '.$e->getMessage());
         }
     }
 }

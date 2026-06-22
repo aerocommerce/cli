@@ -9,23 +9,23 @@ class RunComposerScripts extends InstallStep
 {
     public function install(): void
     {
-        $composer = $this->findComposer();
-
         $commands = [
-            $composer.' update --no-scripts --prefer-dist',
-            $composer.' run-script post-root-package-install --quiet',
-            $composer.' run-script post-create-project-cmd --quiet',
-            $composer.' run-script post-autoload-dump --quiet',
+            array_merge($this->composerCommand(), ['update', '--no-scripts', '--prefer-dist']),
+            array_merge($this->composerCommand(), ['run-script', 'post-root-package-install', '--quiet']),
+            array_merge($this->composerCommand(), ['run-script', 'post-create-project-cmd', '--quiet']),
+            array_merge($this->composerCommand(), ['run-script', 'post-autoload-dump', '--quiet']),
         ];
 
-        $process = Process::fromShellCommandline(implode(' && ', $commands), $this->command->path, null, null, null);
+        foreach ($commands as $command) {
+            $process = new Process($command, $this->command->path, null, null, null);
 
-        if ($this->interaction && '\\' !== DIRECTORY_SEPARATOR && file_exists('/dev/tty') && is_readable('/dev/tty')) {
-            $process->setTty(true);
+            $process->setTimeout(null)->run(function ($_, $line) {
+                $this->command->output->write($line);
+            });
+
+            if (! $process->isSuccessful()) {
+                $this->errorInstall();
+            }
         }
-
-        $process->run(function ($_, $line) {
-            $this->command->output->write($line);
-        });
     }
 }
